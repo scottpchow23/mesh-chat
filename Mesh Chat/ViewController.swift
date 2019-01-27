@@ -16,11 +16,20 @@ class ViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         // Do any additional setup after loading the view, typically from a nib.
-//        BLEServer.instance.startAdvertising()
+        BLEServer.instance.delegate = self
+        logTextView.text = ""
     }
 
     @IBAction func sendButtonTUI(_ sender: Any) {
         
+    }
+}
+
+extension ViewController: BLEServerDelegate {
+    
+    func didReceivePacket(packet: Data) {
+        let input = String(bytes: packet, encoding: .ascii) ?? "Oops, that didn't decode"
+        self.logTextView.text += "\n \(input)"
     }
 }
 

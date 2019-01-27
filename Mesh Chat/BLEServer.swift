@@ -10,9 +10,16 @@ import Foundation
 import CoreBluetooth
 
 
+protocol BLEServerDelegate {
+    func didReceivePacket(packet: Data)
+}
+
 class BLEServer: NSObject {
     static let instance = BLEServer()
 
+
+
+    var delegate: BLEServerDelegate?
     let meshChatDVUUID = "4eb8b60f-a6c0-4681-b93a-4b29e3b27850"
     let writeDVUUID = "4eb8b60f-a6c0-4681-b93a-4b29e3b27851"
     let readDVUUID = "4eb8b60f-a6c0-4681-b93a-4b29e3b27852"
@@ -99,6 +106,16 @@ extension BLEServer: CBPeripheralManagerDelegate {
             print(error.localizedDescription)
         } else {
             print("Peripheral started advertising!")
+        }
+    }
+
+    func peripheralManager(_ peripheral: CBPeripheralManager, didReceiveWrite requests: [CBATTRequest]) {
+        if let data = requests.first?.value {
+            let input = String(bytes: data, encoding: String.Encoding.ascii) ?? "Couldn't decode"
+            print("Got a write request with input: \(input)")
+            if let delegate = self.delegate {
+                delegate.didReceivePacket(packet: data)
+            }
         }
     }
 
