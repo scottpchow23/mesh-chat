@@ -13,6 +13,7 @@ class ViewController: UIViewController {
     @IBOutlet weak var statusLabel: UILabel!
     @IBOutlet weak var logTextView: UITextView!
     @IBOutlet weak var sendButton: UIButton!
+    @IBOutlet weak var messageTextField: UITextField!
     override func viewDidLoad() {
         super.viewDidLoad()
         // Do any additional setup after loading the view, typically from a nib.
@@ -21,7 +22,9 @@ class ViewController: UIViewController {
     }
 
     @IBAction func sendButtonTUI(_ sender: Any) {
-        
+        if let message = messageTextField.text {
+            BLEServer.instance.send(message: message)
+        }
     }
 }
 
@@ -32,4 +35,7 @@ extension ViewController: BLEServerDelegate {
         self.logTextView.text += "\n \(input)"
     }
 }
+
+
+
 
