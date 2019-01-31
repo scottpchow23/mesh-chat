@@ -18,38 +18,67 @@
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <textField opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" text="Enter a Username" borderStyle="roundedRect" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="Clm-6K-qGA">
+                            <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" text="Enter a Username" borderStyle="roundedRect" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="Clm-6K-qGA">
                                 <rect key="frame" x="121" y="175" width="132" height="30"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <nil key="textColor"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="14"/>
-                                <textInputTraits key="textInputTraits"/>
+                                <textInputTraits key="textInputTraits" returnKeyType="done" enablesReturnKeyAutomatically="YES"/>
                                 <connections>
-                                    <action selector="EnterUsername:" destination="BYZ-38-t0r" eventType="touchUpInside" id="2jB-Fx-ypT"/>
+                                    <action selector="EnterUsername:" destination="BYZ-38-t0r" eventType="editingDidEnd" id="KDq-2B-JG2"/>
+                                    <action selector="clearField:" destination="BYZ-38-t0r" eventType="touchDown" id="6bi-43-WUv"/>
                                 </connections>
                             </textField>
-                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="RKn-fw-vfq">
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="RKn-fw-vfq">
                                 <rect key="frame" x="171" y="318" width="33" height="30"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <state key="normal" title="Chat"/>
                                 <connections>
                                     <action selector="ClickChat:" destination="BYZ-38-t0r" eventType="touchUpInside" id="fC8-Pr-7zk"/>
                                 </connections>
                             </button>
+                            <textField opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" text="Your Username will appear here." borderStyle="roundedRect" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="ltB-dc-Uf0">
+                                <rect key="frame" x="72" y="97" width="230" height="30"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <nil key="textColor"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                <textInputTraits key="textInputTraits"/>
+                            </textField>
                         </subviews>
                         <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                        <constraints>
+                            <constraint firstItem="6Tk-OE-BBY" firstAttribute="trailing" secondItem="RKn-fw-vfq" secondAttribute="trailing" constant="171" id="25Q-zf-7wV"/>
+                            <constraint firstItem="RKn-fw-vfq" firstAttribute="top" secondItem="Clm-6K-qGA" secondAttribute="bottom" constant="113" id="5KV-kK-cMn"/>
+                            <constraint firstItem="RKn-fw-vfq" firstAttribute="top" secondItem="Clm-6K-qGA" secondAttribute="bottom" constant="113" id="ACx-qb-f2z"/>
+                            <constraint firstItem="Clm-6K-qGA" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" constant="121" id="B3C-Ar-l7o"/>
+                            <constraint firstItem="6Tk-OE-BBY" firstAttribute="trailing" secondItem="Clm-6K-qGA" secondAttribute="trailing" constant="122" id="Dwp-EK-DmM"/>
+                            <constraint firstItem="RKn-fw-vfq" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" constant="171" id="LGP-dC-88F"/>
+                            <constraint firstItem="Clm-6K-qGA" firstAttribute="top" secondItem="6Tk-OE-BBY" secondAttribute="top" constant="155" id="hLU-7h-Q8Q"/>
+                            <constraint firstItem="6Tk-OE-BBY" firstAttribute="bottom" secondItem="RKn-fw-vfq" secondAttribute="bottom" constant="319" id="k1f-Rb-ieq"/>
+                        </constraints>
                         <viewLayoutGuide key="safeArea" id="6Tk-OE-BBY"/>
                     </view>
+                    <connections>
+                        <outlet property="UsernameTextField" destination="Clm-6K-qGA" id="Eci-H8-qxe"/>
+                        <outlet property="chatButton" destination="RKn-fw-vfq" id="rds-kd-Xph"/>
+                        <outlet property="test" destination="ltB-dc-Uf0" id="faf-D4-wR8"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
-                <view contentMode="scaleToFill" id="Iir-wM-E0j">
-                    <rect key="frame" x="0.0" y="0.0" width="240" height="128"/>
-                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                    <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                    <viewLayoutGuide key="safeArea" id="48W-WP-MOw"/>
-                </view>
             </objects>
             <point key="canvasLocation" x="172" y="27.436281859070466"/>
+        </scene>
+        <!--View Controller-->
+        <scene sceneID="6IT-c9-CIz">
+            <objects>
+                <viewController id="1iz-uK-IzF" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="d9s-eI-wJL">
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        <viewLayoutGuide key="safeArea" id="rCb-fK-bYH"/>
+                    </view>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="7Ju-cd-Z4U" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
         </scene>
     </scenes>
 </document>

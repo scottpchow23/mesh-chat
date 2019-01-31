@@ -9,11 +9,36 @@
 import UIKit
 
 class ViewController: UIViewController {
-    @IBAction func ClickChat(_ sender: Any) {
-    } // When the button is clicked we want to save the username as a variable. if the textfield is not changed do not allow a transition
+    // Mark: Properties
     
-    @IBAction func EnterUsername(_ sender: Any) {
-    } // Want to clear the text field when the user clicks on it. (Touch up Inside)
+    @IBOutlet weak var UsernameTextField: UITextField!
+    @IBOutlet weak var chatButton: UIButton!
+    @IBOutlet weak var test: UITextField!
+    
+    /*
+     Precondition: Button Clicked
+     
+     Postcondition:  Username shown in test textfield and transition to tableview
+     */
+    @IBAction func clearField(_ sender: UITextField) {
+        UsernameTextField.text = ""; // Success
+    } // Want to clear the text field when the user clicks on it. (Touch Down)
+    
+    /*
+     Precondition: Button Clicked
+     
+     Postcondition:  Username shown in test textfield and transition to tableview
+     */
+    @IBAction func ClickChat(_ sender: Any) {
+        guard let username = UsernameTextField.text
+            else
+            {
+                print("Something went wrong")
+                return
+            }
+        test.text = username
+    }
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         // Do any additional setup after loading the view, typically from a nib.
