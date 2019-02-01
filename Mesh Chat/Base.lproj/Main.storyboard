@@ -34,7 +34,7 @@
                                 <state key="normal" title="Chat"/>
                                 <connections>
                                     <action selector="ClickChat:" destination="BYZ-38-t0r" eventType="touchUpInside" id="fC8-Pr-7zk"/>
-                                    <segue destination="Ekr-wt-6vF" kind="show" identifier="toAvailableHosts" id="mhk-JO-B9W"/>
+                                    <segue destination="Ekr-wt-6vF" kind="show" id="5xx-iy-tRd"/>
                                 </connections>
                             </button>
                             <textField opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" text="Your Username will appear here." borderStyle="roundedRect" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="ltB-dc-Uf0">
@@ -71,6 +71,7 @@
         <!--Available Hosts-->
         <scene sceneID="gLk-m4-dLE">
             <objects>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="rEM-4i-Q06" userLabel="First Responder" sceneMemberID="firstResponder"/>
                 <tableViewController id="Ekr-wt-6vF" customClass="AvailableHosts" customModule="Mesh_Chat" customModuleProvider="target" sceneMemberID="viewController">
                     <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" id="hWk-8G-wZi">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
@@ -101,7 +102,6 @@
                         </connections>
                     </tableView>
                 </tableViewController>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="rEM-4i-Q06" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="860" y="27"/>
         </scene>

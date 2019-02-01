@@ -45,15 +45,17 @@ class ViewController: UIViewController {
         {
             return // Not a proper username (should display a message)
         }
-        guard let username = UsernameTextField.text
-            else
-            {
-                print("Something went wrong")
-                return
-            }
-        test.text = username
+        
+        // Not sure what to do for this
+        
+//        guard let username = UsernameTextField.text
+//            else
+//            {
+//                print("Something went wrong")
+//                return
+//            }
+//        test.text = username
         return
-        //performSegue(withIdentifier: "toAvailableHosts", sender: nil)
     }
     
     /*
