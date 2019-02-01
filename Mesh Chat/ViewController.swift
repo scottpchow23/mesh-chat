@@ -9,20 +9,28 @@
 import UIKit
 
 class ViewController: UIViewController {
-    // Mark: Properties
+    // MARK: Properties
     
     @IBOutlet weak var UsernameTextField: UITextField!
     @IBOutlet weak var chatButton: UIButton!
     @IBOutlet weak var test: UITextField!
     
+    // MARK: UITextField Delegate
+    
+    // MARK: Actions
+    
     /*
-     Precondition: Button Clicked
+     Precondition: TextField Clicked (Touch Down)
      
-     Postcondition:  Username shown in test textfield and transition to tableview
+     Postcondition: Clear Textfield
      */
     @IBAction func clearField(_ sender: UITextField) {
         UsernameTextField.text = ""; // Success
     } // Want to clear the text field when the user clicks on it. (Touch Down)
+    
+    // MARK: UIButton Delegate
+    
+    // MARK: Actions
     
     /*
      Precondition: Button Clicked
@@ -30,6 +38,7 @@ class ViewController: UIViewController {
      Postcondition:  Username shown in test textfield and transition to tableview
      */
     @IBAction func ClickChat(_ sender: Any) {
+        UsernameTextField.resignFirstResponder() // Hide the keyboard if the user has not already hit done
         guard let username = UsernameTextField.text
             else
             {
@@ -39,6 +48,11 @@ class ViewController: UIViewController {
         test.text = username
     }
     
+    /*
+     Precondition: App Initialized
+     
+     Postcondition: View loaded
+     */
     override func viewDidLoad() {
         super.viewDidLoad()
         // Do any additional setup after loading the view, typically from a nib.
