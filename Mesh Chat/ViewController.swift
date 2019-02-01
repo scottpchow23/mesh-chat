@@ -31,6 +31,9 @@ class ViewController: UIViewController {
     // MARK: UIButton Delegate
     
     // MARK: Actions
+    @IBAction func usernameInput(_ sender: Any) {
+        test.text = UsernameTextField.text
+    }
     
     /*
      Precondition: Button Clicked
@@ -38,7 +41,10 @@ class ViewController: UIViewController {
      Postcondition:  Username shown in test textfield and transition to tableview
      */
     @IBAction func ClickChat(_ sender: Any) {
-        UsernameTextField.resignFirstResponder() // Hide the keyboard if the user has not already hit done
+        if(UsernameTextField.text == "Enter a Username")
+        {
+            return // Not a proper username (should display a message)
+        }
         guard let username = UsernameTextField.text
             else
             {
@@ -46,6 +52,8 @@ class ViewController: UIViewController {
                 return
             }
         test.text = username
+        return
+        //performSegue(withIdentifier: "toAvailableHosts", sender: nil)
     }
     
     /*
