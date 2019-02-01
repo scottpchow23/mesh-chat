@@ -26,6 +26,7 @@
                                 <connections>
                                     <action selector="EnterUsername:" destination="BYZ-38-t0r" eventType="editingDidEnd" id="KDq-2B-JG2"/>
                                     <action selector="clearField:" destination="BYZ-38-t0r" eventType="touchDown" id="6bi-43-WUv"/>
+                                    <action selector="usernameInput:" destination="BYZ-38-t0r" eventType="valueChanged" id="mho-jI-9Qx"/>
                                 </connections>
                             </textField>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="RKn-fw-vfq">
@@ -33,6 +34,7 @@
                                 <state key="normal" title="Chat"/>
                                 <connections>
                                     <action selector="ClickChat:" destination="BYZ-38-t0r" eventType="touchUpInside" id="fC8-Pr-7zk"/>
+                                    <segue destination="Ekr-wt-6vF" kind="show" identifier="toAvailableHosts" id="mhk-JO-B9W"/>
                                 </connections>
                             </button>
                             <textField opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" text="Your Username will appear here." borderStyle="roundedRect" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="ltB-dc-Uf0">
@@ -66,19 +68,42 @@
             </objects>
             <point key="canvasLocation" x="172" y="27.436281859070466"/>
         </scene>
-        <!--View Controller-->
-        <scene sceneID="6IT-c9-CIz">
+        <!--Available Hosts-->
+        <scene sceneID="gLk-m4-dLE">
             <objects>
-                <viewController id="1iz-uK-IzF" sceneMemberID="viewController">
-                    <view key="view" contentMode="scaleToFill" id="d9s-eI-wJL">
+                <tableViewController id="Ekr-wt-6vF" customClass="AvailableHosts" customModule="Mesh_Chat" customModuleProvider="target" sceneMemberID="viewController">
+                    <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" id="hWk-8G-wZi">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                        <viewLayoutGuide key="safeArea" id="rCb-fK-bYH"/>
-                    </view>
-                </viewController>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="7Ju-cd-Z4U" userLabel="First Responder" sceneMemberID="firstResponder"/>
+                        <prototypes>
+                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="LabelCell" textLabel="kh2-Jf-kyj" style="IBUITableViewCellStyleDefault" id="xzs-X8-Bny">
+                                <rect key="frame" x="0.0" y="28" width="375" height="44"/>
+                                <autoresizingMask key="autoresizingMask"/>
+                                <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="xzs-X8-Bny" id="9Tl-vI-Gle">
+                                    <rect key="frame" x="0.0" y="0.0" width="375" height="43.5"/>
+                                    <autoresizingMask key="autoresizingMask"/>
+                                    <subviews>
+                                        <label opaque="NO" multipleTouchEnabled="YES" contentMode="left" insetsLayoutMarginsFromSafeArea="NO" text="Title" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="kh2-Jf-kyj">
+                                            <rect key="frame" x="16" y="0.0" width="343" height="43.5"/>
+                                            <autoresizingMask key="autoresizingMask"/>
+                                            <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                            <nil key="textColor"/>
+                                            <nil key="highlightedColor"/>
+                                        </label>
+                                    </subviews>
+                                </tableViewCellContentView>
+                            </tableViewCell>
+                        </prototypes>
+                        <connections>
+                            <outlet property="dataSource" destination="Ekr-wt-6vF" id="bCl-AG-GoD"/>
+                            <outlet property="delegate" destination="Ekr-wt-6vF" id="M5H-8v-1Od"/>
+                        </connections>
+                    </tableView>
+                </tableViewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="rEM-4i-Q06" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
+            <point key="canvasLocation" x="860" y="27"/>
         </scene>
     </scenes>
 </document>
