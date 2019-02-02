@@ -63,11 +63,33 @@ class ViewController: UIViewController {
      
      Postcondition: View loaded
      */
+
     override func viewDidLoad() {
         super.viewDidLoad()
         // Do any additional setup after loading the view, typically from a nib.
+        BLEServer.instance.delegate = self
+        logTextView.text = ""
     }
 
+    @IBAction func sendButtonTUI(_ sender: Any) {
+        guard let data = messageTextField.text?.data(using: .ascii),
+            let directPeer = BLEServer.instance.mostRecentPeer else {
+                print("Either message couldn't be decoded or direct peer didn't exist")
+                return
+        }
 
+        BLEServer.instance.send(data: data, to: directPeer)
+    }
 }
+
+extension ViewController: BLEServerDelegate {
+    
+    func didReceivePacket(packet: Data) {
+        let input = String(bytes: packet, encoding: .ascii) ?? "Oops, that didn't decode"
+        self.logTextView.text += "\n \(input)"
+    }
+}
+
+
+
 
