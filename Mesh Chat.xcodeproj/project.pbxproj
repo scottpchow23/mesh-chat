@@ -13,7 +13,9 @@
 		B8F8673321F7F7AB003F6DE3 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = B8F8673221F7F7AB003F6DE3 /* Assets.xcassets */; };
 		B8F8673621F7F7AB003F6DE3 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = B8F8673421F7F7AB003F6DE3 /* LaunchScreen.storyboard */; };
 		B8F8674121F7F7AC003F6DE3 /* Mesh_ChatTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = B8F8674021F7F7AC003F6DE3 /* Mesh_ChatTests.swift */; };
-		DE3538C922038D3500BAC216 /* AvailableHosts.swift in Sources */ = {isa = PBXBuildFile; fileRef = DE3538C822038D3500BAC216 /* AvailableHosts.swift */; };
+		DE32871C2205107C00749231 /* ChatViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DE32871B2205107C00749231 /* ChatViewController.swift */; };
+		DE32871E22051B4100749231 /* Message.swift in Sources */ = {isa = PBXBuildFile; fileRef = DE32871D22051B4100749231 /* Message.swift */; };
+		DE3538C922038D3500BAC216 /* ConversationListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DE3538C822038D3500BAC216 /* ConversationListViewController.swift */; };
 		F89C362ABB93F5D96318C129 /* Pods_Mesh_Chat.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5A945CA4A33CC393BD021D96 /* Pods_Mesh_Chat.framework */; };
 		FF9DA485D1DF83BBDD7073A9 /* Pods_Mesh_ChatTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 53E25C2413A372375F6E3E49 /* Pods_Mesh_ChatTests.framework */; };
 /* End PBXBuildFile section */
@@ -45,7 +47,9 @@
 		B8F8674021F7F7AC003F6DE3 /* Mesh_ChatTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Mesh_ChatTests.swift; sourceTree = "<group>"; };
 		B8F8674221F7F7AC003F6DE3 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		C10F850392BAA584E75700DD /* Pods-Mesh ChatTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Mesh ChatTests.debug.xcconfig"; path = "Pods/Target Support Files/Pods-Mesh ChatTests/Pods-Mesh ChatTests.debug.xcconfig"; sourceTree = "<group>"; };
-		DE3538C822038D3500BAC216 /* AvailableHosts.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AvailableHosts.swift; sourceTree = "<group>"; };
+		DE32871B2205107C00749231 /* ChatViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatViewController.swift; sourceTree = "<group>"; };
+		DE32871D22051B4100749231 /* Message.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Message.swift; sourceTree = "<group>"; };
+		DE3538C822038D3500BAC216 /* ConversationListViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConversationListViewController.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -114,10 +118,12 @@
 				B8F8672B21F7F7AA003F6DE3 /* AppDelegate.swift */,
 				B8F8672D21F7F7AA003F6DE3 /* ViewController.swift */,
 				B8F8672F21F7F7AA003F6DE3 /* Main.storyboard */,
-				DE3538C822038D3500BAC216 /* AvailableHosts.swift */,
+				DE3538C822038D3500BAC216 /* ConversationListViewController.swift */,
 				B8F8673221F7F7AB003F6DE3 /* Assets.xcassets */,
 				B8F8673421F7F7AB003F6DE3 /* LaunchScreen.storyboard */,
 				B8F8673721F7F7AB003F6DE3 /* Info.plist */,
+				DE32871B2205107C00749231 /* ChatViewController.swift */,
+				DE32871D22051B4100749231 /* Message.swift */,
 			);
 			path = "Mesh Chat";
 			sourceTree = "<group>";
@@ -306,7 +312,9 @@
 			files = (
 				B8F8672E21F7F7AA003F6DE3 /* ViewController.swift in Sources */,
 				B8F8672C21F7F7AA003F6DE3 /* AppDelegate.swift in Sources */,
-				DE3538C922038D3500BAC216 /* AvailableHosts.swift in Sources */,
+				DE32871E22051B4100749231 /* Message.swift in Sources */,
+				DE32871C2205107C00749231 /* ChatViewController.swift in Sources */,
+				DE3538C922038D3500BAC216 /* ConversationListViewController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

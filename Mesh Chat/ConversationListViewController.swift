@@ -8,7 +8,7 @@
 
 import UIKit
 
-class AvailableHosts: UITableViewController {
+class ConversationListViewController: UITableViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -52,6 +52,12 @@ class AvailableHosts: UITableViewController {
     override func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
         return "Messages" // Eventually we'll want to do Unread vs Read
         // or Favorites or something of the like
+    }
+    
+    override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        tableView.deselectRow(at: indexPath, animated: true)
+        let chatViewController = ChatViewController()
+        self.navigationController?.pushViewController(chatViewController, animated: true)
     }
 
 

@@ -1,16 +1,16 @@
 PODS:
-  - MessageKit (0.13.5)
+  - MessageKit (1.0.0)
 
 DEPENDENCIES:
-  - MessageKit
+  - MessageKit (~> 1.0)
 
 SPEC REPOS:
   https://github.com/cocoapods/specs.git:
     - MessageKit
 
 SPEC CHECKSUMS:
-  MessageKit: c4bd50e285a0f0761bc23a2e982aa7840873c4f5
+  MessageKit: 16160036b16476b04bd0e9f2c7ce67e662e503e4
 
-PODFILE CHECKSUM: 4cdb68f4b846c5d0de1945f2e25e6ae4c8237182
+PODFILE CHECKSUM: 85c9324ab403b47345a018d6ee00de560b9ebb0c
 
 COCOAPODS: 1.5.3
