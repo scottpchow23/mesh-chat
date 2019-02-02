@@ -22,9 +22,13 @@ class ViewController: UIViewController {
     }
 
     @IBAction func sendButtonTUI(_ sender: Any) {
-        if let message = messageTextField.text {
-            BLEServer.instance.send(message: message)
+        guard let data = messageTextField.text?.data(using: .ascii),
+            let directPeer = BLEServer.instance.mostRecentPeer else {
+                print("Either message couldn't be decoded or direct peer didn't exist")
+                return
         }
+
+        BLEServer.instance.send(data: data, to: directPeer)
     }
 }
 

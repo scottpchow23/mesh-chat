@@ -21,19 +21,22 @@ class BLEServer: NSObject {
 
     var delegate: BLEServerDelegate?
     // Service UUID
-    let dvServiceUUID = "4eb8b60f-a6c0-4681-b93a-4b29e3b27850"
+    let serviceUUID = "4eb8b60f-a6c0-4681-b93a-4b29e3b27850"
     // Characteristic UUIDs
-    let writeDVUUID = "4eb8b60f-a6c0-4681-b93a-4b29e3b27851"
-    let readDVUUID = "4eb8b60f-a6c0-4681-b93a-4b29e3b27852"
+    let txUUID = "4eb8b60f-a6c0-4681-b93a-4b29e3b27851"
     // Service Name
-    let serviceDVName = "mesh_chat_dv"
+    let serviceName = "mesh_chat_dv"
 
     var centralManager: CBCentralManager?
     var peripheralManager: CBPeripheralManager?
     var isAdvertising: Bool
 
+    var writeDVCharacteristics: [CBCharacteristic] = []
     var peer: CBPeripheral?
-    var writeDVCharacteristic: CBCharacteristic?
+    var txCharacteristic: CBCharacteristic?
+    var mostRecentPeer: DirectPeer?
+    var directPeers: [DirectPeer] = []
+    var delegates: [BLEServerDelegate] = []
 
     private override init() {
         isAdvertising = false
@@ -46,14 +49,8 @@ class BLEServer: NSObject {
 
     }
 
-    func send(message: String) {
-        guard let peer = peer,
-            let data = message.data(using: .ascii),
-            let txcharacteristic = writeDVCharacteristic else {
-                return
-        }
-
-        peer.writeValue(data, for: txcharacteristic, type: .withoutResponse)
+    func send(data: Data, to peer: DirectPeer) {
+        peer.peripheral.writeValue(data, for: peer.txCharacteristic, type: .withoutResponse)
     }
 }
 
@@ -62,7 +59,7 @@ extension BLEServer: CBCentralManagerDelegate {
         switch central.state {
         case .poweredOn:
             print("Central is on!")
-            centralManager?.scanForPeripherals(withServices: [CBUUID(string: dvServiceUUID)], options: nil)
+            centralManager?.scanForPeripherals(withServices: [CBUUID(string: serviceUUID)], options: nil)
         default:
             print("Central is off.")
         }
@@ -70,17 +67,18 @@ extension BLEServer: CBCentralManagerDelegate {
 
     func centralManager(_ central: CBCentralManager, didDiscover peripheral: CBPeripheral, advertisementData: [String : Any], rssi RSSI: NSNumber) {
         print("Advertisement data: \n \n \(advertisementData)")
-        if (advertisementData[CBAdvertisementDataLocalNameKey] as? String == serviceDVName &&
-            (advertisementData[CBAdvertisementDataServiceUUIDsKey] as? [CBUUID])?.first == CBUUID(string: dvServiceUUID)) {
+        if (advertisementData[CBAdvertisementDataLocalNameKey] as? String == serviceName &&
+            (advertisementData[CBAdvertisementDataServiceUUIDsKey] as? [CBUUID])?.first == CBUUID(string: serviceUUID)) {
             print("Found peripheral advertising mesh service: \(String(describing: peripheral.name))")
             peer = peripheral
             peer?.delegate = self
             centralManager?.connect(peripheral, options: nil)
         }
+
     }
 
     func centralManager(_ central: CBCentralManager, didConnect peripheral: CBPeripheral) {
-        peripheral.discoverServices([CBUUID(string: dvServiceUUID)])
+        peripheral.discoverServices([CBUUID(string: serviceUUID)])
     }
 
 
@@ -89,20 +87,24 @@ extension BLEServer: CBCentralManagerDelegate {
 extension BLEServer: CBPeripheralDelegate {
     func peripheral(_ peripheral: CBPeripheral, didDiscoverServices error: Error?) {
         for service in peripheral.services! {
-            if (service.uuid == CBUUID(string: dvServiceUUID)) {
-                peripheral.discoverCharacteristics([CBUUID(string: writeDVUUID), CBUUID(string: readDVUUID)], for: service)
+            if (service.uuid == CBUUID(string: serviceUUID)) {
+                peripheral.discoverCharacteristics([CBUUID(string: txUUID)], for: service)
             }
         }
     }
 
     func peripheral(_ peripheral: CBPeripheral, didDiscoverCharacteristicsFor service: CBService, error: Error?) {
         for characteristic in service.characteristics! {
-            if (characteristic.uuid == CBUUID(string: writeDVUUID)) {
-                self.writeDVCharacteristic = characteristic
-            } else if (characteristic.uuid == CBUUID(string: readDVUUID)) {
-
+            if (characteristic.uuid == CBUUID(string: txUUID)) {
+                self.txCharacteristic = characteristic
             }
         }
+        guard let txCharacteristic = txCharacteristic else {
+            print("Didn't discover all required characteristics on the peripheral's mesh service")
+            return
+        }
+        self.mostRecentPeer = DirectPeer(peripheral, txCharacteristic: txCharacteristic)
+        self.directPeers.append(DirectPeer(peripheral, txCharacteristic: txCharacteristic))
     }
 }
 
@@ -128,29 +130,43 @@ extension BLEServer: CBPeripheralManagerDelegate {
     }
 
     func peripheralManager(_ peripheral: CBPeripheralManager, didReceiveWrite requests: [CBATTRequest]) {
-        if let data = requests.first?.value {
-            let input = String(bytes: data, encoding: String.Encoding.ascii) ?? "Couldn't decode"
-            print("Got a write request with input: \(input)")
-            if let delegate = self.delegate {
-                delegate.didReceivePacket(packet: data)
+        for request in requests {
+            if let data = request.value {
+                let input = String(bytes: data, encoding: String.Encoding.ascii) ?? "Couldn't decode"
+                print("Got a write request with input: \(input)")
+
+                switch requests.first?.characteristic.uuid {
+                case CBUUID(string: txUUID):
+                    print("It's for the write characteristic")
+                default:
+                    print("Not sure what this packet was for")
+                }
+
+                if let delegate = self.delegate {
+                    delegate.didReceivePacket(packet: data)
+                    for deleg in delegates {
+                        deleg.didReceivePacket(packet: data)
+                    }
+                }
             }
         }
+
+
     }
 
     fileprivate func createServices() {
-        let service = CBMutableService(type: CBUUID(string: dvServiceUUID), primary: true)
+        let service = CBMutableService(type: CBUUID(string: serviceUUID), primary: true)
 
-        let writeCharacteristic = CBMutableCharacteristic(type: CBUUID(string: writeDVUUID), properties: [.writeWithoutResponse], value: nil, permissions: [.writeable])
-        let readCharacteristic = CBMutableCharacteristic(type: CBUUID(string: readDVUUID), properties: [.read, .notify], value: nil, permissions: [.readable])
+        let txCharacteristic = CBMutableCharacteristic(type: CBUUID(string: txUUID), properties: [.writeWithoutResponse], value: nil, permissions: [.writeable])
 
-        service.characteristics = [writeCharacteristic, readCharacteristic]
+        service.characteristics = [txCharacteristic]
 
         peripheralManager?.add(service)
     }
 
     func startAdvertising() {
-        peripheralManager?.startAdvertising([CBAdvertisementDataServiceUUIDsKey: [CBUUID(string: dvServiceUUID)],
-                                             CBAdvertisementDataLocalNameKey: serviceDVName])
+        peripheralManager?.startAdvertising([CBAdvertisementDataServiceUUIDsKey: [CBUUID(string: serviceUUID)],
+                                             CBAdvertisementDataLocalNameKey: serviceName])
     }
 
     func stopAdvertising() {
