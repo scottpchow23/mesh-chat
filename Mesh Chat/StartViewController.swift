@@ -26,6 +26,15 @@ class StartViewController: UIViewController {
         }
         firstTouch = false
     } // Want to clear the text field when the user clicks on it. (Touch Down)
+    
+    @IBAction func clickedOutside(_ sender: Any) {
+        print("test to see what runs first (this or readyToChat")
+    }
+    @IBAction func readyToChat(_ sender: Any) {
+        let conversationListViewController = ConversationListViewController()
+        self.navigationController?.pushViewController(conversationListViewController, animated: true)
+    }
+    
 
 }
 
