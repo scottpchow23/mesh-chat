@@ -8,18 +8,18 @@
 
 /* Begin PBXBuildFile section */
 		B8F8672C21F7F7AA003F6DE3 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = B8F8672B21F7F7AA003F6DE3 /* AppDelegate.swift */; };
-		B8F8672E21F7F7AA003F6DE3 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B8F8672D21F7F7AA003F6DE3 /* ViewController.swift */; };
+		B8F8672E21F7F7AA003F6DE3 /* StartViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B8F8672D21F7F7AA003F6DE3 /* StartViewController.swift */; };
 		B8F8673121F7F7AA003F6DE3 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = B8F8672F21F7F7AA003F6DE3 /* Main.storyboard */; };
 		B8F8673321F7F7AB003F6DE3 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = B8F8673221F7F7AB003F6DE3 /* Assets.xcassets */; };
 		B8F8673621F7F7AB003F6DE3 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = B8F8673421F7F7AB003F6DE3 /* LaunchScreen.storyboard */; };
 		B8F8674121F7F7AC003F6DE3 /* Mesh_ChatTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = B8F8674021F7F7AC003F6DE3 /* Mesh_ChatTests.swift */; };
+		B8F8675C21FA809A003F6DE3 /* BLEServer.swift in Sources */ = {isa = PBXBuildFile; fileRef = B8F8675B21FA809A003F6DE3 /* BLEServer.swift */; };
+		B8F867B421FFCF96003F6DE3 /* DirectPeer.swift in Sources */ = {isa = PBXBuildFile; fileRef = B8F867B321FFCF96003F6DE3 /* DirectPeer.swift */; };
 		DE32871C2205107C00749231 /* ChatViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DE32871B2205107C00749231 /* ChatViewController.swift */; };
 		DE32871E22051B4100749231 /* Message.swift in Sources */ = {isa = PBXBuildFile; fileRef = DE32871D22051B4100749231 /* Message.swift */; };
 		DE3538C922038D3500BAC216 /* ConversationListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DE3538C822038D3500BAC216 /* ConversationListViewController.swift */; };
 		F89C362ABB93F5D96318C129 /* Pods_Mesh_Chat.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5A945CA4A33CC393BD021D96 /* Pods_Mesh_Chat.framework */; };
 		FF9DA485D1DF83BBDD7073A9 /* Pods_Mesh_ChatTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 53E25C2413A372375F6E3E49 /* Pods_Mesh_ChatTests.framework */; };
-		B8F8675C21FA809A003F6DE3 /* BLEServer.swift in Sources */ = {isa = PBXBuildFile; fileRef = B8F8675B21FA809A003F6DE3 /* BLEServer.swift */; };
-		B8F867B421FFCF96003F6DE3 /* DirectPeer.swift in Sources */ = {isa = PBXBuildFile; fileRef = B8F867B321FFCF96003F6DE3 /* DirectPeer.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -40,7 +40,7 @@
 		5A945CA4A33CC393BD021D96 /* Pods_Mesh_Chat.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Mesh_Chat.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		B8F8672821F7F7AA003F6DE3 /* Mesh Chat.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Mesh Chat.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		B8F8672B21F7F7AA003F6DE3 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
-		B8F8672D21F7F7AA003F6DE3 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
+		B8F8672D21F7F7AA003F6DE3 /* StartViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StartViewController.swift; sourceTree = "<group>"; };
 		B8F8673021F7F7AA003F6DE3 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		B8F8673221F7F7AB003F6DE3 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		B8F8673521F7F7AB003F6DE3 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
@@ -48,12 +48,12 @@
 		B8F8673C21F7F7AC003F6DE3 /* Mesh ChatTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "Mesh ChatTests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
 		B8F8674021F7F7AC003F6DE3 /* Mesh_ChatTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Mesh_ChatTests.swift; sourceTree = "<group>"; };
 		B8F8674221F7F7AC003F6DE3 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		B8F8675B21FA809A003F6DE3 /* BLEServer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BLEServer.swift; sourceTree = "<group>"; };
+		B8F867B321FFCF96003F6DE3 /* DirectPeer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DirectPeer.swift; sourceTree = "<group>"; };
 		C10F850392BAA584E75700DD /* Pods-Mesh ChatTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Mesh ChatTests.debug.xcconfig"; path = "Pods/Target Support Files/Pods-Mesh ChatTests/Pods-Mesh ChatTests.debug.xcconfig"; sourceTree = "<group>"; };
 		DE32871B2205107C00749231 /* ChatViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatViewController.swift; sourceTree = "<group>"; };
 		DE32871D22051B4100749231 /* Message.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Message.swift; sourceTree = "<group>"; };
 		DE3538C822038D3500BAC216 /* ConversationListViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConversationListViewController.swift; sourceTree = "<group>"; };
-		B8F8675B21FA809A003F6DE3 /* BLEServer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BLEServer.swift; sourceTree = "<group>"; };
-		B8F867B321FFCF96003F6DE3 /* DirectPeer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DirectPeer.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -121,7 +121,7 @@
 			children = (
 				B8F867B221FFCF73003F6DE3 /* BLELinkLayer */,
 				B8F8672B21F7F7AA003F6DE3 /* AppDelegate.swift */,
-				B8F8672D21F7F7AA003F6DE3 /* ViewController.swift */,
+				B8F8672D21F7F7AA003F6DE3 /* StartViewController.swift */,
 				B8F8672F21F7F7AA003F6DE3 /* Main.storyboard */,
 				DE3538C822038D3500BAC216 /* ConversationListViewController.swift */,
 				B8F8673221F7F7AB003F6DE3 /* Assets.xcassets */,
@@ -303,18 +303,22 @@
 			inputFileListPaths = (
 			);
 			inputPaths = (
-				"${SRCROOT}/Pods/Target Support Files/Pods-Mesh Chat/Pods-Mesh Chat-frameworks.sh",
+				"${PODS_ROOT}/Target Support Files/Pods-Mesh Chat/Pods-Mesh Chat-frameworks.sh",
+				"${BUILT_PRODUCTS_DIR}/FCUUID/FCUUID.framework",
 				"${BUILT_PRODUCTS_DIR}/MessageKit/MessageKit.framework",
+				"${BUILT_PRODUCTS_DIR}/UICKeyChainStore/UICKeyChainStore.framework",
 			);
 			name = "[CP] Embed Pods Frameworks";
 			outputFileListPaths = (
 			);
 			outputPaths = (
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/FCUUID.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/MessageKit.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/UICKeyChainStore.framework",
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-Mesh Chat/Pods-Mesh Chat-frameworks.sh\"\n";
+			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-Mesh Chat/Pods-Mesh Chat-frameworks.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
 /* End PBXShellScriptBuildPhase section */
@@ -324,7 +328,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				B8F8672E21F7F7AA003F6DE3 /* ViewController.swift in Sources */,
+				B8F8672E21F7F7AA003F6DE3 /* StartViewController.swift in Sources */,
 				B8F8672C21F7F7AA003F6DE3 /* AppDelegate.swift in Sources */,
 				DE32871E22051B4100749231 /* Message.swift in Sources */,
 				DE32871C2205107C00749231 /* ChatViewController.swift in Sources */,
