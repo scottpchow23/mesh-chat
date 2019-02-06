@@ -31,6 +31,12 @@ class StartViewController: UIViewController {
         print("test to see what runs first (this or readyToChat")
     }
     @IBAction func readyToChat(_ sender: Any) {
+        if(UsernameTextField.text == "" || UsernameTextField.text == "Enter a Username"){
+            return
+        }
+        else{
+            // Save the Username and generate a UUID for duration of app install
+        }
         let conversationListViewController = ConversationListViewController()
         self.navigationController?.pushViewController(conversationListViewController, animated: true)
     }

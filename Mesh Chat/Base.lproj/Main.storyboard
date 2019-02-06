@@ -32,9 +32,8 @@
                                     <action selector="clickedOutside:" destination="BYZ-38-t0r" eventType="editingDidEnd" id="Wma-8v-HTp"/>
                                 </connections>
                             </textField>
-                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="JL3-pQ-iM4">
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="JL3-pQ-iM4">
                                 <rect key="frame" x="164" y="410" width="46" height="30"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <state key="normal" title="Button"/>
                                 <connections>
                                     <action selector="readyToChat:" destination="BYZ-38-t0r" eventType="touchUpInside" id="0mL-PM-u07"/>
@@ -45,10 +44,14 @@
                         <constraints>
                             <constraint firstItem="6Tk-OE-BBY" firstAttribute="trailing" secondItem="Clm-6K-qGA" secondAttribute="trailing" constant="122" id="17r-bJ-Ocd"/>
                             <constraint firstItem="Clm-6K-qGA" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" constant="121" id="4aq-TF-2Hh"/>
+                            <constraint firstItem="JL3-pQ-iM4" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" constant="164" id="7TV-8w-152"/>
                             <constraint firstItem="6Tk-OE-BBY" firstAttribute="bottom" secondItem="Clm-6K-qGA" secondAttribute="bottom" constant="309" id="8Fo-z6-aKo"/>
                             <constraint firstItem="Clm-6K-qGA" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" constant="121" id="B3C-Ar-l7o"/>
                             <constraint firstItem="6Tk-OE-BBY" firstAttribute="trailing" secondItem="Clm-6K-qGA" secondAttribute="trailing" constant="122" id="Dwp-EK-DmM"/>
                             <constraint firstItem="Clm-6K-qGA" firstAttribute="top" secondItem="6Tk-OE-BBY" secondAttribute="top" constant="308" id="VzU-ku-SCU"/>
+                            <constraint firstItem="6Tk-OE-BBY" firstAttribute="bottom" secondItem="JL3-pQ-iM4" secondAttribute="bottom" constant="227" id="aoU-2l-l5G"/>
+                            <constraint firstItem="JL3-pQ-iM4" firstAttribute="top" secondItem="Clm-6K-qGA" secondAttribute="bottom" constant="8" id="vNa-E8-Hyq"/>
+                            <constraint firstItem="6Tk-OE-BBY" firstAttribute="trailing" secondItem="JL3-pQ-iM4" secondAttribute="trailing" constant="165" id="vVS-yo-51s"/>
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="6Tk-OE-BBY"/>
                     </view>
