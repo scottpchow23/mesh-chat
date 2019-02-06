@@ -11,7 +11,10 @@ import UIKit
 class StartViewController: UIViewController {
     // MARK: Properties
     var firstTouch: Bool = true
+    var username: String = ""
     @IBOutlet weak var UsernameTextField: UITextField!
+    @IBOutlet weak var chatButton: UIButton!
+    
     
     // MARK: Actions
     
@@ -27,17 +30,32 @@ class StartViewController: UIViewController {
         firstTouch = false
     } // Want to clear the text field when the user clicks on it. (Touch Down)
     
-    @IBAction func clickedOutside(_ sender: Any) {
-        print("test to see what runs first (this or readyToChat")
+   
+    @IBAction func dismissKeyBoard(_ sender: UITextField) {
+        self.resignFirstResponder()
     }
-    @IBAction func readyToChat(_ sender: Any) {
+    @IBAction func didEndOnExit(_ sender: Any) {
+        print("Triggered")
+    }
+    @IBAction func usernameValueChanged(_ sender: Any) {
+        print("Triggered")
+    }
+    @IBAction func readyToChat(_ sender: UIButton) {
+        
+        
         if(UsernameTextField.text == "" || UsernameTextField.text == "Enter a Username"){
             return
         }
         else{
-            // Save the Username and generate a UUID for duration of app install
+            username = UsernameTextField.text ?? ""
+            if(username == ""){
+                return // do not allow navagation without a username
+            }
+            else{
+                // Generate unique UUID
+            }
         }
-        let conversationListViewController = ConversationListViewController()
+        let conversationListViewController = ConversationListViewController(username)
         self.navigationController?.pushViewController(conversationListViewController, animated: true)
     }
     

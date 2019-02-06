@@ -10,6 +10,13 @@ import UIKit
 
 class ConversationListViewController: UITableViewController {
     
+    var username : String = ""
+    
+    init(user: String){
+        self.username = user
+    }
+    
+    
     let CellIdentifier = "LabelCell"
     
     override func viewDidLoad() {
