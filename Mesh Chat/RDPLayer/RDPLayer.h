@@ -23,6 +23,7 @@ NS_ASSUME_NONNULL_BEGIN
 
 + (instancetype)sharedInstance;
 - (void)queueData:(NSData *)data toUUID:(NSUUID *)uuid;
+- (void)didReceivePacket:(NSData * _Nonnull)data;
 @end
 
 NS_ASSUME_NONNULL_END

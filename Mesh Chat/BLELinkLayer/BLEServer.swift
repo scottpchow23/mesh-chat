@@ -156,6 +156,7 @@ extension BLEServer: CBPeripheralManagerDelegate {
                     print("Not sure what this packet was for")
                 }
                 let senderUUID = request.central.identifier
+                RDPLayer.sharedInstance().didReceivePacket(data)
                 if let delegate = self.delegate {
                     delegate.didReceivePacket(data, uuid: senderUUID)
                     for deleg in delegates {
@@ -190,7 +191,7 @@ extension BLEServer: CBPeripheralManagerDelegate {
 
 extension BLEServer: RDPLayerDelegate {
     func send(_ data: Data, to uuid: UUID) {
-        if let peer = directPeers.first(where: { $0.peripheral.identifier == uuid}) {
+        if let peer = directPeers.first(where: { $0.uuid == uuid}) {
             send(data: data, to: peer)
         }
     }

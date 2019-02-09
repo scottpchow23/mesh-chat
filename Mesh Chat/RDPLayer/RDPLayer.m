@@ -157,6 +157,10 @@ struct linklayer_protocol_ack {
             
             RDPLayerRemoteHost *remoteHost = [_queuedPackets objectForKey:uuid];
             NSMutableArray<RDPPacket *> *packets = [remoteHost.receivedPackets objectForKey:@(seqnum)];
+            if (!packets){
+                packets = [NSMutableArray array];
+                [remoteHost.receivedPackets setObject:packets forKey:@(seqnum)];
+            }
             [self sortPackets:packets];
             
             for (RDPPacket *packet in packets){

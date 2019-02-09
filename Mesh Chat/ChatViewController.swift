@@ -18,6 +18,8 @@ class ChatViewController: MessagesViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+
+        self.messageInputBar.delegate = self
         
         messagesCollectionView.messagesDataSource = self
         messagesCollectionView.messagesLayoutDelegate = self
@@ -27,6 +29,8 @@ class ChatViewController: MessagesViewController {
         messages.append(Message(sender: kevin, messageId: "3", sentDate: Date.distantFuture, text: "Welcome to the future"))
         // Connect to a peripheral here
     }
+
+
     
     
 }
@@ -34,7 +38,7 @@ class ChatViewController: MessagesViewController {
 extension ChatViewController: MessagesDataSource {
     func currentSender() -> Sender {
         let scott = Sender(id: "123", displayName: "Scott")
-        //let prabal = Sender(id: "456", displayName: "Prabal")
+
         
         return scott
     }
@@ -51,3 +55,11 @@ extension ChatViewController: MessagesDataSource {
 }
 
 extension ChatViewController: MessagesDisplayDelegate, MessagesLayoutDelegate {}
+
+extension ChatViewController: MessageInputBarDelegate {
+    func messageInputBar(_ inputBar: MessageInputBar, didPressSendButtonWith text: String) {
+        if let peer = BLEServer.instance.mostRecentPeer, let data = text.data(using: .ascii) {
+            RDPLayer.sharedInstance().queue(data, to: peer.uuid)
+        }
+    }
+}
