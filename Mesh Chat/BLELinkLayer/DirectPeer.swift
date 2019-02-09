@@ -12,10 +12,12 @@ import CoreBluetooth
 struct DirectPeer {
 
     var peripheral: CBPeripheral
+    var uuid: UUID
     var txCharacteristic: CBCharacteristic
 
-    init(_ peripheral: CBPeripheral, txCharacteristic: CBCharacteristic) {
+    init(_ peripheral: CBPeripheral, uuid: UUID, txCharacteristic: CBCharacteristic) {
         self.peripheral = peripheral
+        self.uuid = uuid
         self.txCharacteristic = txCharacteristic
     }
 }

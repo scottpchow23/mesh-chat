@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import CoreBluetooth
 
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate {
@@ -18,6 +19,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         // Override point for customization after application launch.
         let server = BLEServer.instance
         server.startManagers()
+        server.rxUUID = CBUUID(string: UUID().uuidString)
+        print("The uuid for this session is: \(server.rxUUID)")
         return true
     }
 

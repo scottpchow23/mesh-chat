@@ -9,6 +9,7 @@
 #import "RDPLayer.h"
 #import "RDPLayerRemoteHost.h"
 #import "crc32_simple.h"
+#import "Mesh_Chat-Swift.h"
 
 enum LINKLAYER_PROTOCOL_PACKET_TYPE {
     LINKLAYER_PROTOCOL_PACKET_TYPE_SYN,
@@ -40,7 +41,7 @@ struct linklayer_protocol_ack {
     uint32_t len_received;
 } __attribute__((packed));
 
-@interface RDPLayer () {
+@interface RDPLayer () <BLEServerDelegate>{
     NSMutableDictionary<NSUUID *, RDPLayerRemoteHost *> *_queuedPackets;
     NSMutableDictionary<NSUUID *, RDPLayerRemoteHost *> *_receivedPackets;
 }
@@ -225,6 +226,12 @@ struct linklayer_protocol_ack {
 
 - (void)sendPacket:(RDPPacket *)packet {
     [_delegate sendData:packet.data toUUID:packet.peerUUID];
+}
+
+
+
+- (void)didReceivePacket:(NSData * _Nonnull)_ {
+    
 }
 
 @end

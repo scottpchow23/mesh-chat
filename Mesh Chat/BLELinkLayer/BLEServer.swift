@@ -10,8 +10,8 @@ import Foundation
 import CoreBluetooth
 
 
-protocol BLEServerDelegate {
-    func didReceivePacket(packet: Data)
+@objc protocol BLEServerDelegate {
+    func didReceivePacket(_ : Data, uuid: UUID)
 }
 
 class BLEServer: NSObject {
@@ -24,6 +24,7 @@ class BLEServer: NSObject {
     let serviceUUID = "4eb8b60f-a6c0-4681-b93a-4b29e3b27850"
     // Characteristic UUIDs
     let txUUID = "4eb8b60f-a6c0-4681-b93a-4b29e3b27851"
+    var rxUUID = CBUUID(string: "4eb8b60f-a6c0-4681-b93a-4b29e3b27852") // DEFAULT VALUE
     // Service Name
     let serviceName = "mesh_chat_dv"
 
@@ -41,6 +42,7 @@ class BLEServer: NSObject {
     private override init() {
         isAdvertising = false
         super.init()
+        RDPLayer.sharedInstance().delegate = self
     }
 
     func startManagers() {
@@ -88,23 +90,35 @@ extension BLEServer: CBPeripheralDelegate {
     func peripheral(_ peripheral: CBPeripheral, didDiscoverServices error: Error?) {
         for service in peripheral.services! {
             if (service.uuid == CBUUID(string: serviceUUID)) {
-                peripheral.discoverCharacteristics([CBUUID(string: txUUID)], for: service)
+                peripheral.discoverCharacteristics(nil, for: service)
             }
         }
     }
 
     func peripheral(_ peripheral: CBPeripheral, didDiscoverCharacteristicsFor service: CBService, error: Error?) {
+        if (service.characteristics?.count != 2) { return }
+
+        var string: String?
+
         for characteristic in service.characteristics! {
             if (characteristic.uuid == CBUUID(string: txUUID)) {
                 self.txCharacteristic = characteristic
+
+            } else {
+                print ("We got: \(characteristic.uuid.uuidString)")
+                string = characteristic.uuid.uuidString
             }
         }
-        guard let txCharacteristic = txCharacteristic else {
+        guard let txCharacteristic = txCharacteristic,
+            let uuidString = string,
+            let uuid = UUID(uuidString: uuidString) else {
             print("Didn't discover all required characteristics on the peripheral's mesh service")
             return
         }
-        self.mostRecentPeer = DirectPeer(peripheral, txCharacteristic: txCharacteristic)
-        self.directPeers.append(DirectPeer(peripheral, txCharacteristic: txCharacteristic))
+
+
+        self.mostRecentPeer = DirectPeer(peripheral, uuid: uuid, txCharacteristic: txCharacteristic)
+        self.directPeers.append(DirectPeer(peripheral, uuid: uuid, txCharacteristic: txCharacteristic))
     }
 }
 
@@ -141,11 +155,11 @@ extension BLEServer: CBPeripheralManagerDelegate {
                 default:
                     print("Not sure what this packet was for")
                 }
-
+                let senderUUID = request.central.identifier
                 if let delegate = self.delegate {
-                    delegate.didReceivePacket(packet: data)
+                    delegate.didReceivePacket(data, uuid: senderUUID)
                     for deleg in delegates {
-                        deleg.didReceivePacket(packet: data)
+                        deleg.didReceivePacket(data, uuid: senderUUID)
                     }
                 }
             }
@@ -158,8 +172,8 @@ extension BLEServer: CBPeripheralManagerDelegate {
         let service = CBMutableService(type: CBUUID(string: serviceUUID), primary: true)
 
         let txCharacteristic = CBMutableCharacteristic(type: CBUUID(string: txUUID), properties: [.writeWithoutResponse], value: nil, permissions: [.writeable])
-
-        service.characteristics = [txCharacteristic]
+        let rxCharacteristic = CBMutableCharacteristic(type: rxUUID, properties: [.read], value: nil, permissions: [.readable])
+        service.characteristics = [txCharacteristic, rxCharacteristic]
 
         peripheralManager?.add(service)
     }
@@ -171,5 +185,13 @@ extension BLEServer: CBPeripheralManagerDelegate {
 
     func stopAdvertising() {
         peripheralManager?.stopAdvertising()
+    }
+}
+
+extension BLEServer: RDPLayerDelegate {
+    func send(_ data: Data, to uuid: UUID) {
+        if let peer = directPeers.first(where: { $0.peripheral.identifier == uuid}) {
+            send(data: data, to: peer)
+        }
     }
 }
