@@ -11,8 +11,8 @@
 #import "crc32_simple.h"
 #import "Mesh_Chat-Swift.h"
 
-#define SYN_DATA_LEN 154
-#define MTU 185
+#define SYN_DATA_LEN 127
+#define MTU 158
 
 enum LINKLAYER_PROTOCOL_PACKET_TYPE {
     LINKLAYER_PROTOCOL_PACKET_TYPE_SYN,
@@ -99,7 +99,7 @@ struct linklayer_protocol_ack {
         rawPacket.len = packetLen;
         memcpy(rawPacket.data, data.bytes + start, packetLen);
         [uuid getUUIDBytes:rawPacket.uuid];
-        uint32_t crc;
+        uint32_t crc = 0;
         crc32(rawPacket.data, packetLen, &crc);
         rawPacket.crc32 = crc;
         
@@ -181,7 +181,7 @@ struct linklayer_protocol_ack {
                 //Send a NACK since we didn't receive the full packet
                 return;
             }
-            uint32_t crc;
+            uint32_t crc = 0;
             crc32(synpacket->data, synpacket->len, &crc);
             if (crc != synpacket->crc32){
                 [self sendAck:seqnum receivedLen:lenReceived toUUID:uuid];
