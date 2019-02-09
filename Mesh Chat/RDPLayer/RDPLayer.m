@@ -112,6 +112,10 @@ struct linklayer_protocol_ack {
         start += packetLen;
         len -= packetLen;
     }
+    
+    for (RDPPacket *packet in remoteHost.queuedPackets[@(remoteHost.seqNum)]){
+        [self sendPacket:packet];
+    }
     remoteHost.seqNum++;
 }
 
