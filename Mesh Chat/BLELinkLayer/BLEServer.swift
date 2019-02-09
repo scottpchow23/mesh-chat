@@ -14,17 +14,15 @@ import CoreBluetooth
     func didReceivePacket(_ : Data, uuid: UUID)
 }
 
-class BLEServer: NSObject {
-    static let instance = BLEServer()
-
-
+@objc class BLEServer: NSObject {
+    @objc static let instance = BLEServer()
 
     var delegate: BLEServerDelegate?
     // Service UUID
     let serviceUUID = "4eb8b60f-a6c0-4681-b93a-4b29e3b27850"
     // Characteristic UUIDs
     let txUUID = "4eb8b60f-a6c0-4681-b93a-4b29e3b27851"
-    var rxUUID = CBUUID(string: "4eb8b60f-a6c0-4681-b93a-4b29e3b27852") // DEFAULT VALUE
+    @objc var rxUUID = CBUUID(string: "4eb8b60f-a6c0-4681-b93a-4b29e3b27852") // DEFAULT VALUE
     // Service Name
     let serviceName = "mesh_chat_dv"
 

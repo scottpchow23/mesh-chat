@@ -91,6 +91,8 @@ struct linklayer_protocol_ack {
         if (len > SYN_DATA_LEN)
             packetLen = SYN_DATA_LEN;
         
+        NSUUID *ourUUID = [[NSUUID alloc] initWithUUIDString:BLEServer.instance.rxUUID.UUIDString];
+        
         struct linklayer_protocol_syn rawPacket;
         bzero(&rawPacket, sizeof(struct linklayer_protocol_syn));
         rawPacket.packet_type = LINKLAYER_PROTOCOL_PACKET_TYPE_SYN;
@@ -98,7 +100,7 @@ struct linklayer_protocol_ack {
         rawPacket.start = start;
         rawPacket.len = packetLen;
         memcpy(rawPacket.data, data.bytes + start, packetLen);
-        [uuid getUUIDBytes:rawPacket.uuid];
+        [ourUUID getUUIDBytes:rawPacket.uuid];
         uint32_t crc = 0;
         crc32(rawPacket.data, packetLen, &crc);
         rawPacket.crc32 = crc;
