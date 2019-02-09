@@ -11,6 +11,9 @@
 #import "crc32_simple.h"
 #import "Mesh_Chat-Swift.h"
 
+#define SYN_DATA_LEN 154
+#define MTU 185
+
 enum LINKLAYER_PROTOCOL_PACKET_TYPE {
     LINKLAYER_PROTOCOL_PACKET_TYPE_SYN,
     LINKLAYER_PROTOCOL_PACKET_TYPE_ACK
@@ -18,25 +21,28 @@ enum LINKLAYER_PROTOCOL_PACKET_TYPE {
 
 struct linklayer_protocol_syncompact {
     uint8_t packet_type;
+    uuid_t uuid;
     uint32_t seq_num;
     uint8_t ttl;
     uint32_t start;
-    uint8_t len; //if this is less than or equal to 171, this is the last packet
+    uint8_t len; //if this is less than or equal to 154, this is the last packet
     uint32_t crc32;
 } __attribute__((packed));
 
 struct linklayer_protocol_syn {
     uint8_t packet_type;
+    uuid_t uuid;
     uint32_t seq_num;
     uint8_t ttl;
     uint32_t start;
-    uint8_t len; //if this is less than or equal to 171, this is the last packet
+    uint8_t len; //if this is less than or equal to 154, this is the last packet
     uint32_t crc32;
-    char data[170];
+    char data[SYN_DATA_LEN];
 } __attribute__((packed));
 
 struct linklayer_protocol_ack {
     uint8_t packet_type;
+    uuid_t uuid;
     uint32_t ack_num;
     uint32_t len_received;
 } __attribute__((packed));
@@ -54,6 +60,7 @@ struct linklayer_protocol_ack {
     static dispatch_once_t onceToken;
     dispatch_once(&onceToken, ^{
         sharedInstance = [[RDPLayer alloc] init];
+        assert(sizeof(struct linklayer_protocol_syn) == MTU);
     });
     return sharedInstance;
 }
@@ -81,8 +88,8 @@ struct linklayer_protocol_ack {
     uint32_t start = 0;
     while (len > 0){
         uint8_t packetLen = len;
-        if (len > 170)
-            packetLen = 170;
+        if (len > SYN_DATA_LEN)
+            packetLen = SYN_DATA_LEN;
         
         struct linklayer_protocol_syn rawPacket;
         bzero(&rawPacket, sizeof(struct linklayer_protocol_syn));
@@ -91,6 +98,7 @@ struct linklayer_protocol_ack {
         rawPacket.start = start;
         rawPacket.len = packetLen;
         memcpy(rawPacket.data, data.bytes + start, packetLen);
+        [uuid getUUIDBytes:rawPacket.uuid];
         uint32_t crc;
         crc32(rawPacket.data, packetLen, &crc);
         rawPacket.crc32 = crc;
@@ -157,6 +165,8 @@ struct linklayer_protocol_ack {
                 }
             }
             
+            NSLog(@"Received seq for sequence number %d, length %d", seqnum, lenReceived);
+            
             if (len < sizeof(struct linklayer_protocol_syncompact)){
                 [self sendAck:seqnum receivedLen:lenReceived toUUID:uuid];
                 //Send a NACK since we can here
@@ -174,6 +184,8 @@ struct linklayer_protocol_ack {
                 //Send a NACK since the data is corrupt
                 return;
             } else {
+                NSLog(@"Got Good Sequence Packet");
+                
                 //Packet is good, process it
                 RDPPacket *packet = [[RDPPacket alloc] init];
                 packet.peerUUID = uuid;
@@ -198,11 +210,22 @@ struct linklayer_protocol_ack {
             break;
         }
         case LINKLAYER_PROTOCOL_PACKET_TYPE_ACK: {
-            struct linklayer_protocol_ack *synpacket = (struct linklayer_protocol_ack *)data;
+            struct linklayer_protocol_ack *ack = (struct linklayer_protocol_ack *)data;
             RDPLayerRemoteHost *remoteHost = [_queuedPackets objectForKey:uuid];
-            NSArray *queuedPackets = [remoteHost.queuedPackets objectForKey:@(synpacket->ack_num)];
+            NSMutableArray<RDPPacket *> *queuedPackets = [remoteHost.queuedPackets objectForKey:@(ack->ack_num)];
             
+            NSLog(@"Received ack for sequence number %d, length %d", ack->ack_num, ack->len_received);
             
+            NSMutableArray *idxToRemove = [NSMutableArray array];
+            for (RDPPacket *packet in queuedPackets){
+                if (packet.start + packet.len <= ack->len_received){
+                    [idxToRemove addObject:@([queuedPackets indexOfObject:packet])];
+                }
+            }
+            
+            for (NSNumber *idx in idxToRemove){
+                [queuedPackets removeObjectAtIndex:idx.integerValue];
+            }
             
             break;
         }
@@ -210,11 +233,14 @@ struct linklayer_protocol_ack {
 }
 
 - (void)sendAck:(uint32_t)seq_num receivedLen:(uint32_t)len toUUID:(NSUUID *)uuid {
+    NSLog(@"Sent ack for sequence number %d, length %d", seq_num, len);
+    
     struct linklayer_protocol_ack ack;
     bzero(&ack, sizeof(struct linklayer_protocol_ack));
     ack.packet_type = LINKLAYER_PROTOCOL_PACKET_TYPE_ACK;
     ack.ack_num = seq_num;
     ack.len_received = len;
+    [uuid getUUIDBytes:ack.uuid];
     
     RDPPacket *packet = [[RDPPacket alloc] init];
     packet.seqNum = ack.ack_num;
@@ -228,10 +254,12 @@ struct linklayer_protocol_ack {
     [_delegate sendData:packet.data toUUID:packet.peerUUID];
 }
 
-
-
-- (void)didReceivePacket:(NSData * _Nonnull)_ {
-    
+- (void)didReceivePacket:(NSData * _Nonnull)data {
+    if (data.length < sizeof(struct linklayer_protocol_ack)){
+        return;
+    }
+    struct linklayer_protocol_ack *ack = (struct linklayer_protocol_ack *)data.bytes;
+    [self receivePacket:data fromUUID:[[NSUUID alloc] initWithUUIDBytes:ack->uuid]];
 }
 
 @end
