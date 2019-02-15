@@ -12,19 +12,21 @@ import MessageKit
 class ChatViewController: MessagesViewController {
     
     var messages: [MessageType] = []
-    let scott = Sender(id: "123", displayName: "Scott")
-    let prabal = Sender(id: "456", displayName: "Prabal")
-    let kevin = Sender(id: "789", displayName: "Kevin")
+    let thisUUID: String = (UserDefaults.standard.string(forKey: "theUUID")) ?? ""
+    let thisUsername: String = (UserDefaults.standard.string(forKey: "theUsername")) ?? ""
+    lazy var reciever = Sender(id: thisUUID, displayName: thisUsername)
+    //lazy var sender = Sender(id: ,displayName: )
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
         messagesCollectionView.messagesDataSource = self
         messagesCollectionView.messagesLayoutDelegate = self
         messagesCollectionView.messagesDisplayDelegate = self
-        messages.append(Message(sender: scott, messageId: "1", sentDate: Date.distantFuture, text: "Hello"))
-        messages.append(Message(sender: prabal, messageId: "2", sentDate: Date.distantFuture, text: "Here we are"))
-        messages.append(Message(sender: kevin, messageId: "3", sentDate: Date.distantFuture, text: "Welcome to the future"))
+        
+        
+        messages.append(Message(sender: reciever, messageId: "1", sentDate: Date.distantFuture, text: "Hello"))
+        messages.append(Message(sender: reciever, messageId: "2", sentDate: Date.distantFuture, text: "Here we are"))
+        messages.append(Message(sender: reciever, messageId: "3", sentDate: Date.distantFuture, text: "Welcome to the future"))
         // Connect to a peripheral here
     }
     
@@ -33,10 +35,8 @@ class ChatViewController: MessagesViewController {
 
 extension ChatViewController: MessagesDataSource {
     func currentSender() -> Sender {
-        let scott = Sender(id: "123", displayName: "Scott")
-        //let prabal = Sender(id: "456", displayName: "Prabal")
-        
-        return scott
+        // Looks like this should work
+        return self.reciever
     }
     
     func messageForItem(at indexPath: IndexPath, in messagesCollectionView: MessagesCollectionView) -> MessageType {
