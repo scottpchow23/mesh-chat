@@ -10,11 +10,7 @@ import UIKit
 
 class ConversationListViewController: UITableViewController {
     
-    var username : String = ""
-    
-    init(user: String){
-        self.username = user
-    }
+    var user : String?
     
     
     let CellIdentifier = "LabelCell"
@@ -34,7 +30,7 @@ class ConversationListViewController: UITableViewController {
 
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         // One row in each section
-        return 2
+        return 3
     }
 
     
@@ -53,6 +49,11 @@ class ConversationListViewController: UITableViewController {
         {
             // Show second default message
             cell.textLabel?.text = "Chat with Prabal" // finish this
+        }
+        else if(indexPath.row == 2)
+        {
+            // Show second default message
+            cell.textLabel?.text = user // TEST
         }
         else{
             cell.textLabel?.text = "Section \(indexPath.section) Row \(indexPath.row)"}

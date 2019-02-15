@@ -6,7 +6,6 @@ target 'Mesh Chat' do
   
   # Pods for Mesh Chat
   pod 'MessageKit', '~> 1.0'
-  pod 'FCUUID'
 
   post_install do |installer|
         installer.pods_project.targets.each do |target|

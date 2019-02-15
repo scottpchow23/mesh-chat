@@ -11,13 +11,20 @@ import UIKit
 class StartViewController: UIViewController {
     // MARK: Properties
     var firstTouch: Bool = true
-    var username: String = ""
+    
+    var username: String = UserDefaults.standard.string(forKey: "theUsername") ?? "Enter a Username"
+    
     @IBOutlet weak var UsernameTextField: UITextField!
     @IBOutlet weak var chatButton: UIButton!
     
     
+    // How do we store the username?
+    
     // MARK: Actions
     
+    override func viewDidLoad() {
+        UsernameTextField.text = username
+    }
     /*
      Precondition: TextField Clicked (Touch Down)
      
@@ -40,6 +47,7 @@ class StartViewController: UIViewController {
     @IBAction func usernameValueChanged(_ sender: Any) {
         print("Triggered")
     }
+    
     @IBAction func readyToChat(_ sender: UIButton) {
         
         
@@ -52,10 +60,17 @@ class StartViewController: UIViewController {
                 return // do not allow navagation without a username
             }
             else{
-                // Generate unique UUID
+                // Set a uuid for the user
+                let uuid = UUID().uuidString
+                UserDefaults.standard.set(uuid, forKey: "theUUID") // Assign UUID to user defaults
+                // Also store the username
+                UserDefaults.standard.set(username, forKey: "theUsername")
             }
         }
-        let conversationListViewController = ConversationListViewController(username)
+        
+        let conversationListViewController = ConversationListViewController()
+        
+            conversationListViewController.user = username
         self.navigationController?.pushViewController(conversationListViewController, animated: true)
     }
     
