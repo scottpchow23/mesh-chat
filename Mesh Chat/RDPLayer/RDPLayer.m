@@ -158,6 +158,14 @@ struct linklayer_protocol_ack {
             uint32_t lenReceived = 0;
             
             RDPLayerRemoteHost *remoteHost = [_queuedPackets objectForKey:uuid];
+            if (!remoteHost){
+                remoteHost = [[RDPLayerRemoteHost alloc] init];
+                remoteHost.peer = uuid;
+                remoteHost.seqNum = 0;
+                remoteHost.queuedPackets = [NSMutableDictionary dictionary];
+                remoteHost.receivedPackets = [NSMutableDictionary dictionary];
+                [_queuedPackets setObject:remoteHost forKey:uuid];
+            }
             NSMutableArray<RDPPacket *> *packets = [remoteHost.receivedPackets objectForKey:@(seqnum)];
             if (!packets){
                 packets = [NSMutableArray array];

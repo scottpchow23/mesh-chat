@@ -16,6 +16,9 @@ NS_ASSUME_NONNULL_BEGIN
 @property (nonatomic, assign) uint32_t seqNum;
 @property (nonatomic, strong) NSMutableDictionary<NSNumber *, NSMutableArray<RDPPacket *> *> *queuedPackets;
 @property (nonatomic, strong) NSMutableDictionary<NSNumber *, NSMutableArray<RDPPacket *> *> *receivedPackets;
+@property (nonatomic, assign) pthread_mutex_t threadLock;
+@property (nonatomic, assign) bool threadIsRunning;
+@property (nonatomic, assign) pthread_t thread;
 @end
 
 NS_ASSUME_NONNULL_END
