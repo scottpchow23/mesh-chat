@@ -14,10 +14,7 @@
     self = [super init];
     if (self){
         self.threadIsRunning = false;
-        pthread_mutex_t threadLock;
-        pthread_mutex_init(&threadLock, NULL);
-        self.threadLock = threadLock;
-        self.thread = NULL;
+        pthread_mutex_init(&self->_threadLock, NULL);
     }
     return self;
 }
