@@ -83,7 +83,8 @@ void *remoteHostThread(RDPLayerRemoteHost *self){
         NSMutableArray *packetsToRemove = [NSMutableArray array];
         
         pthread_mutex_lock(&self->_lock);
-        for (int i = 0; i < SLIDING_WINDOW; i++){
+        int count = MIN(SLIDING_WINDOW, _rawQueuedPackets.count);
+        for (int i = 0; i < count; i++){
             RDPPacket *packet = [_rawQueuedPackets objectAtIndex:i];
             if (packet.acknowledged){
                 [packetsToRemove insertObject:@(i) atIndex:0];
@@ -94,7 +95,7 @@ void *remoteHostThread(RDPLayerRemoteHost *self){
             time(&now);
             
             if (!packet.sent || (packet.sent && now > packet.sentTime + SLIDING_WINDOW_TIMEOUT)){
-                if (!packet.sent){
+                if (packet.sent){
                     NSLog(@"Timeout on packet seq: %d; start=%d, len=%d", packet.seqNum, packet.start, packet.len);
                 }
                 [[RDPLayer sharedInstance] sendPacket:packet];

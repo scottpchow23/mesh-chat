@@ -66,7 +66,7 @@
         crc32(rawPacket.data, packetLen, &crc);
         rawPacket.crc32 = crc;
         
-        RDPPacket *packet = [[RDPPacket alloc] initWithRawPacket:&rawPacket];
+        RDPPacket *packet = [[RDPPacket alloc] initWithRawPacket:&rawPacket uuid:uuid];
         
         [remoteHost queuePacket:packet];
         
@@ -145,7 +145,7 @@
                 NSLog(@"Got Good Sequence Packet");
                 
                 //Packet is good, process it
-                RDPPacket *packet = [[RDPPacket alloc] initWithRawPacket:&synpacket];
+                RDPPacket *packet = [[RDPPacket alloc] initWithRawPacket:&synpacket uuid:uuid];
                 [packets addObject:packet];
                 [self sortPackets:packets];
                 
@@ -196,7 +196,7 @@
     ack.len_received = len;
     [uuid getUUIDBytes:ack.uuid];
     
-    RDPPacket *packet = [[RDPPacket alloc] initWithRawPacket:&ack];
+    RDPPacket *packet = [[RDPPacket alloc] initWithRawPacket:&ack uuid:uuid];
     
     [self sendPacket:packet];
 }

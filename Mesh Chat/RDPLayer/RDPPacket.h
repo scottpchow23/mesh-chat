@@ -20,7 +20,7 @@ NS_ASSUME_NONNULL_BEGIN
 @property (nonatomic, assign) time_t sentTime;
 @property (nonatomic, assign) BOOL acknowledged;
 
-- (instancetype)initWithRawPacket:(struct linklayer_protocol_syn *)syn;
+- (instancetype)initWithRawPacket:(struct linklayer_protocol_syn *)syn uuid:(NSUUID *)uuid;
 @end
 
 NS_ASSUME_NONNULL_END
