@@ -17,7 +17,9 @@ NS_ASSUME_NONNULL_BEGIN
 @property (nonatomic, strong, readonly) NSMutableDictionary<NSNumber *, NSMutableArray<RDPPacket *> *> *queuedPackets;
 @property (nonatomic, strong, readonly) NSMutableDictionary<NSNumber *, NSMutableArray<RDPPacket *> *> *receivedPackets;
 @property (nonatomic, strong, readonly) NSMutableArray *rawQueuedPackets;
+
 - (instancetype)initWithPeer:(NSUUID *)uuid;
+- (void)queuePacket:(RDPPacket *)packet;
 - (void)startThread;
 @end
 

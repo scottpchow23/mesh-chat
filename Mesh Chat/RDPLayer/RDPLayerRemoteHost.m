@@ -105,4 +105,28 @@ void *remoteHostThread(RDPLayerRemoteHost *self){
     self->_threadIsRunning = NO;
     pthread_mutex_unlock(&self->_threadLock);
 }
+
+- (void)sortPackets:(NSMutableArray *)packets {
+    [packets sortUsingComparator:^NSComparisonResult(RDPPacket *_Nonnull obj1, RDPPacket *_Nonnull obj2) {
+        if (obj1.start < obj2.start){
+            return NSOrderedAscending;
+        } else if (obj1.start > obj2.start){
+            return NSOrderedDescending;
+        } else {
+            @throw [NSException exceptionWithName:@"RDPLayerException" reason:@"Multiple packets have the same sequence number and start byte." userInfo:nil];
+        }
+    }];
+}
+
+- (void)queuePacket:(RDPPacket *)packet {
+    NSMutableArray *queueArray = [self->_queuedPackets objectForKey:@(packet.seqNum)];
+    if (!queueArray){
+        queueArray = [NSMutableArray array];
+        [self->_queuedPackets setObject:queueArray forKey:@(packet.seqNum)];
+    }
+    [queueArray addObject:packet];
+    [self sortPackets:queueArray];
+    
+    [_rawQueuedPackets addObject:packet];
+}
 @end

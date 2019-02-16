@@ -108,13 +108,7 @@ struct linklayer_protocol_ack {
         packet.peerUUID = uuid;
         packet.data = [NSData dataWithBytes:(void *)&rawPacket length:sizeof(struct linklayer_protocol_syn)];
         
-        NSMutableArray *queueArray = [remoteHost.queuedPackets objectForKey:@(packet.seqNum)];
-        if (!queueArray){
-            queueArray = [NSMutableArray array];
-            [remoteHost.queuedPackets setObject:queueArray forKey:@(packet.seqNum)];
-        }
-        [queueArray addObject:packet];
-        [self sortPackets:queueArray];
+        [remoteHost queuePacket:packet];
         
         start += packetLen;
         len -= packetLen;
