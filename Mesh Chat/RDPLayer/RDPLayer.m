@@ -52,7 +52,7 @@
     while (len > 0){
         uint8_t packetLen = len;
         if (len > SYN_DATA_LEN)
-            packetLen = SYN_DATA_LEN;
+            packetLen = SYN_DATA_LEN + 1;
         
         NSUUID *ourUUID = [[NSUUID alloc] initWithUUIDString:BLEServer.instance.rxUUID.UUIDString];
         
@@ -62,18 +62,18 @@
         rawPacket.seq_num = remoteHost.seqNum;
         rawPacket.start = start;
         rawPacket.len = packetLen;
-        memcpy(rawPacket.data, data.bytes + start, packetLen);
+        memcpy(rawPacket.data, data.bytes + start, MIN(packetLen, SYN_DATA_LEN));
         [ourUUID getUUIDBytes:rawPacket.uuid];
         uint32_t crc = 0;
-        crc32(rawPacket.data, packetLen, &crc);
+        crc32(rawPacket.data, MIN(packetLen, SYN_DATA_LEN), &crc);
         rawPacket.crc32 = crc;
         
         RDPPacket *packet = [[RDPPacket alloc] initWithRawPacket:&rawPacket uuid:uuid];
         
         [remoteHost queuePacket:packet];
         
-        start += packetLen;
-        len -= packetLen;
+        start += MIN(packetLen, SYN_DATA_LEN);
+        len -= MIN(packetLen, SYN_DATA_LEN);
     }
     
     [remoteHost startThread];
@@ -132,13 +132,18 @@
                 //Send a NACK since we can here
                 return;
             }
-            if (len < sizeof(struct linklayer_protocol_syncompact) + synpacket->len){
+            if (len < sizeof(struct linklayer_protocol_syncompact) + MIN(synpacket->len, SYN_DATA_LEN)){
                 [self sendAck:seqnum receivedLen:lenReceived toUUID:uuid];
                 //Send a NACK since we didn't receive the full packet
                 return;
             }
+            
+            int lenToUse = synpacket->len;
+            if (lenToUse > SYN_DATA_LEN)
+                lenToUse = SYN_DATA_LEN;
+            
             uint32_t crc = 0;
-            crc32(synpacket->data, synpacket->len, &crc);
+            crc32(synpacket->data, lenToUse, &crc);
             if (crc != synpacket->crc32){
                 [self sendAck:seqnum receivedLen:lenReceived toUUID:uuid];
                 //Send a NACK since the data is corrupt
@@ -162,6 +167,10 @@
                     if (packet.start == lenReceived){
                         lenReceived += packet.len;
                     }
+                }
+                
+                if (synpacket->len <= SYN_DATA_LEN){
+                    NSLog(@"Got last packet!");
                 }
                 
                 [self sendAck:seqnum receivedLen:lenReceived toUUID:uuid];

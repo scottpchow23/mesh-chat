@@ -23,7 +23,7 @@ struct linklayer_protocol_syncompact {
     uint32_t seq_num;
     uint8_t ttl;
     uint32_t start;
-    uint8_t len; //if this is less than or equal to 154, this is the last packet
+    uint8_t len; //if this is less than or equal to 127, this is the last packet
     uint32_t crc32;
 } __attribute__((packed));
 
@@ -33,7 +33,7 @@ struct linklayer_protocol_syn {
     uint32_t seq_num;
     uint8_t ttl;
     uint32_t start;
-    uint8_t len; //if this is less than or equal to 154, this is the last packet
+    uint8_t len; //if this is less than or equal to 127, this is the last packet
     uint32_t crc32;
     char data[SYN_DATA_LEN];
 } __attribute__((packed));
