@@ -203,6 +203,10 @@
 
 - (void)sendPacket:(RDPPacket *)packet {
     packet.sent = YES;
+    time_t now;
+    time(&now);
+    
+    packet.sentTime = now;
     [_delegate sendData:packet.data toUUID:packet.peerUUID];
 }
 

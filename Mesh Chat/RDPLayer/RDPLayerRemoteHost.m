@@ -11,6 +11,7 @@
 #import <pthread.h>
 
 #define SLIDING_WINDOW 3
+#define SLIDING_WINDOW_TIMEOUT 5
 
 @interface RDPLayerRemoteHost() {
     pthread_mutex_t _lock;
@@ -89,7 +90,13 @@ void *remoteHostThread(RDPLayerRemoteHost *self){
                 continue;
             }
             
-            if (!packet.sent){
+            time_t now;
+            time(&now);
+            
+            if (!packet.sent || (packet.sent && now > packet.sentTime + SLIDING_WINDOW_TIMEOUT)){
+                if (!packet.sent){
+                    NSLog(@"Timeout on packet seq: %d; start=%d, len=%d", packet.seqNum, packet.start, packet.len);
+                }
                 [[RDPLayer sharedInstance] sendPacket:packet];
             }
         }
