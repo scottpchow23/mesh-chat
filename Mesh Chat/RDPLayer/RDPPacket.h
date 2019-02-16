@@ -17,6 +17,8 @@ NS_ASSUME_NONNULL_BEGIN
 @property (nonatomic, retain) NSUUID *peerUUID;
 @property (nonatomic, retain) NSData *data;
 
+@property (nonatomic, assign) BOOL isLastPacket;
+
 @property (nonatomic, assign) BOOL sent;
 @property (nonatomic, assign) int didNotReceiveCount;
 @property (nonatomic, assign) time_t sentTime;

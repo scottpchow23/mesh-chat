@@ -169,8 +169,22 @@
                     }
                 }
                 
-                if (synpacket->len <= SYN_DATA_LEN){
+                if ([packets lastObject].isLastPacket && lenReceived == packets.lastObject.start+packets.lastObject.len){
                     NSLog(@"Got last packet!");
+                    
+                    uint8_t *data = malloc(sizeof(uint8_t) * lenReceived);
+                    for (RDPPacket *packet in packets){
+                        memcpy(data + packet.start, [packet.data bytes] + offsetof(struct linklayer_protocol_syn, data), packet.len);
+                    }
+                    
+                    printf("Received: %s", data);
+                    
+                    NSData *receivedData = [NSData dataWithBytes:data length:lenReceived];
+                    free(data);
+                    
+                    dispatch_async(dispatch_get_main_queue(), ^{
+                        [self.clientDelegate receivedData:receivedData fromUUID:uuid];
+                    });
                 }
                 
                 [self sendAck:seqnum receivedLen:lenReceived toUUID:uuid];

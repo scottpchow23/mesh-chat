@@ -17,11 +17,14 @@
         self.acknowledged = NO;
         self.sentTime = 0;
         self.didNotReceiveCount = 0;
+        self.isLastPacket = NO;
         
         if (syn->packet_type == LINKLAYER_PROTOCOL_PACKET_TYPE_SYN){
             self.seqNum = syn->seq_num;
             self.start = syn->start;
             self.len = syn->len;
+            if (self.len <= SYN_DATA_LEN)
+                self.isLastPacket = YES;
             if (self.len > SYN_DATA_LEN)
                 self.len = SYN_DATA_LEN;
             self.peerUUID = uuid;
