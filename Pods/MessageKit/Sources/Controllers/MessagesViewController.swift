@@ -205,9 +205,9 @@ UICollectionViewDelegateFlowLayout, UICollectionViewDataSource {
         }
 
         switch kind {
-        case UICollectionView.elementKindSectionHeader:
+        case UICollectionElementKindSectionHeader:
             return displayDelegate.messageHeaderView(for: indexPath, in: messagesCollectionView)
-        case UICollectionView.elementKindSectionFooter:
+        case UICollectionElementKindSectionFooter:
             return displayDelegate.messageFooterView(for: indexPath, in: messagesCollectionView)
         default:
             fatalError(MessageKitError.unrecognizedSectionKind)
@@ -282,11 +282,11 @@ UICollectionViewDelegateFlowLayout, UICollectionViewDataSource {
     
     private func addObservers() {
         NotificationCenter.default.addObserver(
-            self, selector: #selector(clearMemoryCache), name: UIApplication.didReceiveMemoryWarningNotification, object: nil)
+            self, selector: #selector(clearMemoryCache), name: .UIApplicationDidReceiveMemoryWarning, object: nil)
     }
     
     private func removeObservers() {
-        NotificationCenter.default.removeObserver(self, name: UIApplication.didReceiveMemoryWarningNotification, object: nil)
+        NotificationCenter.default.removeObserver(self, name: .UIApplicationDidReceiveMemoryWarning, object: nil)
     }
     
     @objc private func clearMemoryCache() {

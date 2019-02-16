@@ -312,13 +312,13 @@ open class MessageInputBar: UIView {
         
         NotificationCenter.default.addObserver(self,
                                                selector: #selector(MessageInputBar.textViewDidChange),
-                                               name: UITextView.textDidChangeNotification, object: inputTextView)
+                                               name: .UITextViewTextDidChange, object: inputTextView)
         NotificationCenter.default.addObserver(self,
                                                selector: #selector(MessageInputBar.textViewDidBeginEditing),
-                                               name: UITextView.textDidBeginEditingNotification, object: inputTextView)
+                                               name: .UITextViewTextDidBeginEditing, object: inputTextView)
         NotificationCenter.default.addObserver(self,
                                                selector: #selector(MessageInputBar.textViewDidEndEditing),
-                                               name: UITextView.textDidEndEditingNotification, object: inputTextView)
+                                               name: .UITextViewTextDidEndEditing, object: inputTextView)
     }
     
     /// Adds all of the subviews
@@ -412,7 +412,7 @@ open class MessageInputBar: UIView {
             guard UIScreen.main.nativeBounds.height == 2436 else { return }
             if let window = window {
                 windowAnchor?.isActive = false
-                windowAnchor = contentView.bottomAnchor.constraint(lessThanOrEqualToSystemSpacingBelow: window.safeAreaLayoutGuide.bottomAnchor, multiplier: 1)
+                windowAnchor = contentView.bottomAnchor.constraintLessThanOrEqualToSystemSpacingBelow(window.safeAreaLayoutGuide.bottomAnchor, multiplier: 1)
                 windowAnchor?.constant = -padding.bottom
                 windowAnchor?.priority = UILayoutPriority(rawValue: 750)
                 windowAnchor?.isActive = true

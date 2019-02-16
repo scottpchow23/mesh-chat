@@ -13,9 +13,27 @@ import CoreBluetooth
 class AppDelegate: UIResponder, UIApplicationDelegate {
 
     var window: UIWindow?
-
+    let thisUUID: String = (UserDefaults.standard.string(forKey: "theUUID")) ?? ""
+    let thisUsername: String = (UserDefaults.standard.string(forKey: "theUsername")) ?? ""
+    
 
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
+        if (thisUUID != "")
+        {
+            let conversationListViewController = ConversationListViewController()
+            
+            conversationListViewController.user = thisUsername
+            
+            let mainStoryboard : UIStoryboard = UIStoryboard(name: "Main", bundle: nil)
+            let initialViewController : UINavigationController = mainStoryboard.instantiateInitialViewController() as! UINavigationController
+    
+            let Start : StartViewController = mainStoryboard.instantiateViewController(withIdentifier: "StartView") as! StartViewController
+            let List : ConversationListViewController = mainStoryboard.instantiateViewController(withIdentifier: "ConversationView") as! ConversationListViewController
+            
+            initialViewController.setViewControllers([Start,List], animated: false)
+
+            window?.rootViewController = initialViewController
+        }
         // Override point for customization after application launch.
         let server = BLEServer.instance
         server.startManagers()

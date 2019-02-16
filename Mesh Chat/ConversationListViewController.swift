@@ -1,5 +1,5 @@
 //
-//  AvailableHosts.swift
+//  ConversationListViewController.swift
 //  Mesh Chat
 //
 //  Created by Kevin Heffernan on 1/31/19.
@@ -10,8 +10,15 @@ import UIKit
 
 class ConversationListViewController: UITableViewController {
     
+    var user : String?
+    
+    
+    let CellIdentifier = "LabelCell"
+    
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        tableView.register(UITableViewCell.classForCoder(), forCellReuseIdentifier: CellIdentifier)
     }
 
     // MARK: - Table view data source
@@ -23,12 +30,12 @@ class ConversationListViewController: UITableViewController {
 
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         // One row in each section
-        return 2
+        return 3
     }
 
     
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier: "LabelCell", for: indexPath)
+        let cell = tableView.dequeueReusableCell(withIdentifier: CellIdentifier, for: indexPath)
 
         // Configure the cell...
         // Lines 41 - 54 are MVP
@@ -42,6 +49,11 @@ class ConversationListViewController: UITableViewController {
         {
             // Show second default message
             cell.textLabel?.text = "Chat with Prabal" // finish this
+        }
+        else if(indexPath.row == 2)
+        {
+            // Show second default message
+            cell.textLabel?.text = user // TEST
         }
         else{
             cell.textLabel?.text = "Section \(indexPath.section) Row \(indexPath.row)"}
