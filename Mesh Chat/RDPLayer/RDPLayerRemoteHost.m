@@ -79,6 +79,8 @@ void *remoteHostThread(RDPLayerRemoteHost *self){
     self->_threadIsRunning = YES;
     pthread_mutex_unlock(&self->_threadLock);
     
+    NSLog(@"Starting thread");
+    
     while (self->_rawQueuedPackets.count != 0){
         NSMutableArray *packetsToRemove = [NSMutableArray array];
         
@@ -87,6 +89,7 @@ void *remoteHostThread(RDPLayerRemoteHost *self){
         for (int i = 0; i < count; i++){
             RDPPacket *packet = [_rawQueuedPackets objectAtIndex:i];
             if (packet.acknowledged){
+                NSLog(@"Packet marked as acknoledged!");
                 [packetsToRemove insertObject:@(i) atIndex:0];
                 continue;
             }
@@ -105,9 +108,11 @@ void *remoteHostThread(RDPLayerRemoteHost *self){
         for (NSNumber *num in packetsToRemove){
             [_rawQueuedPackets removeObjectAtIndex:num.integerValue];
         }
-        pthread_mutex_lock(&self->_lock);
+        pthread_mutex_unlock(&self->_lock);
         usleep(100);
     }
+    
+    NSLog(@"Exiting thread");
     
     pthread_mutex_lock(&self->_threadLock);
     self->_threadIsRunning = NO;
@@ -127,6 +132,7 @@ void *remoteHostThread(RDPLayerRemoteHost *self){
 }
 
 - (void)queuePacket:(RDPPacket *)packet {
+    pthread_mutex_lock(&self->_lock);
     NSMutableArray *queueArray = [self->_queuedPackets objectForKey:@(packet.seqNum)];
     if (!queueArray){
         queueArray = [NSMutableArray array];
@@ -136,5 +142,6 @@ void *remoteHostThread(RDPLayerRemoteHost *self){
     [self sortPackets:queueArray];
     
     [_rawQueuedPackets addObject:packet];
+    pthread_mutex_unlock(&self->_lock);
 }
 @end

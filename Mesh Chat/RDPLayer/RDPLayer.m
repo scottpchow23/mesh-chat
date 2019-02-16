@@ -145,7 +145,7 @@
                 NSLog(@"Got Good Sequence Packet");
                 
                 //Packet is good, process it
-                RDPPacket *packet = [[RDPPacket alloc] initWithRawPacket:&synpacket uuid:uuid];
+                RDPPacket *packet = [[RDPPacket alloc] initWithRawPacket:synpacket uuid:uuid];
                 [packets addObject:packet];
                 [self sortPackets:packets];
                 
@@ -173,7 +173,8 @@
             for (RDPPacket *packet in queuedPackets){
                 if (packet.start + packet.len <= ack->len_received){
                     packet.acknowledged = YES;
-                    [idxToRemove addObject:@([queuedPackets indexOfObject:packet])];
+                    NSLog(@"Marked packet for sequence number %d, start %d, length %d as acknowledged.", packet.seqNum, packet.start, packet.len);
+                    [idxToRemove insertObject:@([queuedPackets indexOfObject:packet]) atIndex:0];
                 }
             }
             
@@ -189,12 +190,14 @@
 - (void)sendAck:(uint32_t)seq_num receivedLen:(uint32_t)len toUUID:(NSUUID *)uuid {
     NSLog(@"Sent ack for sequence number %d, length %d", seq_num, len);
     
+    NSUUID *ourUUID = [[NSUUID alloc] initWithUUIDString:BLEServer.instance.rxUUID.UUIDString];
+    
     struct linklayer_protocol_ack ack;
     bzero(&ack, sizeof(struct linklayer_protocol_ack));
     ack.packet_type = LINKLAYER_PROTOCOL_PACKET_TYPE_ACK;
     ack.ack_num = seq_num;
     ack.len_received = len;
-    [uuid getUUIDBytes:ack.uuid];
+    [ourUUID getUUIDBytes:ack.uuid];
     
     RDPPacket *packet = [[RDPPacket alloc] initWithRawPacket:&ack uuid:uuid];
     
