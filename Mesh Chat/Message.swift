@@ -9,13 +9,19 @@
 import Foundation
 import MessageKit
 
-struct Message : MessageType{
-    var sender: Sender
-    
-    var messageId: String
-    
+struct CodableMessage: Codable {
+    var senderID: String
+    var senderName: String
+    var messageID: String
     var sentDate: Date
-    
+    var text: String
+}
+
+struct Message : MessageType{
+
+    var sender: Sender
+    var messageId: String
+    var sentDate: Date
     var kind: MessageKind
     
     init(sender: Sender, messageId : String, sentDate : Date, text : String) {
@@ -24,6 +30,39 @@ struct Message : MessageType{
         self.sentDate = sentDate
         self.kind = .text(text)
     }
-    
+
+    init(_ codeable: CodableMessage) {
+        sender = Sender(id: codeable.senderID, displayName: codeable.senderName)
+        messageId = codeable.messageID
+        sentDate = codeable.sentDate
+        kind = .text(codeable.text)
+    }
+
+    func archive() -> CodableMessage? {
+        switch kind {
+        case let .text(string):
+            return CodableMessage(senderID: sender.id, senderName: sender.displayName, messageID: messageId, sentDate: sentDate, text: string)
+        default:
+            return nil
+        }
+
+    }
     
 }
+
+// Below is an example of how to both encode and decode a message
+
+//    let message = Message(sender: Sender(id: "456", displayName: "Scott") , messageId: "123", sentDate: Date(), text: "Hello World")
+//    if let archive = message.archive() {
+//        let jsonEncoder = JSONEncoder()
+//        if let jsonData = try? jsonEncoder.encode(archive) {
+//            if let decodedMessage = try? JSONDecoder().decode(CodableMessage.self, from: jsonData) {
+//                let unarchivedMessage = Message(decodedMessage)
+//                print(unarchivedMessage)
+//            }
+//        } else {
+//
+//        }
+//    } else {
+//        fatalError("Couldn't archive message")
+//    }
