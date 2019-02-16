@@ -16,6 +16,8 @@ NS_ASSUME_NONNULL_BEGIN
 @property (nonatomic, assign) uint32_t len;
 @property (nonatomic, retain) NSUUID *peerUUID;
 @property (nonatomic, retain) NSData *data;
+@property (nonatomic, assign) time_t queuedTime;
+@property (nonatomic, assign) BOOL sent;
 @property (nonatomic, assign) BOOL acknowledged;
 @end
 

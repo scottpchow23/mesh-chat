@@ -76,11 +76,7 @@ struct linklayer_protocol_ack {
 - (void)queueData:(NSData *)data toUUID:(NSUUID *)uuid {
     RDPLayerRemoteHost *remoteHost = [_queuedPackets objectForKey:uuid];
     if (!remoteHost){
-        remoteHost = [[RDPLayerRemoteHost alloc] init];
-        remoteHost.peer = uuid;
-        remoteHost.seqNum = 0;
-        remoteHost.queuedPackets = [NSMutableDictionary dictionary];
-        remoteHost.receivedPackets = [NSMutableDictionary dictionary];
+        remoteHost = [[RDPLayerRemoteHost alloc] initWithPeer:uuid];
         [_queuedPackets setObject:remoteHost forKey:uuid];
     }
     
@@ -124,9 +120,7 @@ struct linklayer_protocol_ack {
         len -= packetLen;
     }
     
-    for (RDPPacket *packet in remoteHost.queuedPackets[@(remoteHost.seqNum)]){
-        [self sendPacket:packet];
-    }
+    [remoteHost startThread];
     remoteHost.seqNum++;
 }
 
@@ -159,11 +153,7 @@ struct linklayer_protocol_ack {
             
             RDPLayerRemoteHost *remoteHost = [_queuedPackets objectForKey:uuid];
             if (!remoteHost){
-                remoteHost = [[RDPLayerRemoteHost alloc] init];
-                remoteHost.peer = uuid;
-                remoteHost.seqNum = 0;
-                remoteHost.queuedPackets = [NSMutableDictionary dictionary];
-                remoteHost.receivedPackets = [NSMutableDictionary dictionary];
+                remoteHost = [[RDPLayerRemoteHost alloc] initWithPeer:uuid];
                 [_queuedPackets setObject:remoteHost forKey:uuid];
             }
             NSMutableArray<RDPPacket *> *packets = [remoteHost.receivedPackets objectForKey:@(seqnum)];
@@ -233,6 +223,7 @@ struct linklayer_protocol_ack {
             NSMutableArray *idxToRemove = [NSMutableArray array];
             for (RDPPacket *packet in queuedPackets){
                 if (packet.start + packet.len <= ack->len_received){
+                    packet.acknowledged = YES;
                     [idxToRemove addObject:@([queuedPackets indexOfObject:packet])];
                 }
             }
@@ -265,6 +256,7 @@ struct linklayer_protocol_ack {
 }
 
 - (void)sendPacket:(RDPPacket *)packet {
+    packet.sent = YES;
     [_delegate sendData:packet.data toUUID:packet.peerUUID];
 }
 
