@@ -236,10 +236,10 @@
 }
 
 - (void)sendPacket:(RDPPacket *)packet {
-    int random = arc4random_uniform(10);
+    /*int random = arc4random_uniform(10);
     if (random > 5){
         return;
-    }
+    }*/ //Uncomment to simulate packet drop
     
     packet.sent = YES;
     time_t now;
