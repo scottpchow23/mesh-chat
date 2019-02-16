@@ -39,6 +39,8 @@
 }
 
 - (void)queueData:(NSData *)data toUUID:(NSUUID *)uuid {
+    NSLog(@"Queuing data of length %d", data.length);
+    
     RDPLayerRemoteHost *remoteHost = [_queuedPackets objectForKey:uuid];
     if (!remoteHost){
         remoteHost = [[RDPLayerRemoteHost alloc] initWithPeer:uuid];
@@ -146,6 +148,12 @@
                 
                 //Packet is good, process it
                 RDPPacket *packet = [[RDPPacket alloc] initWithRawPacket:synpacket uuid:uuid];
+                if (packet.start < lenReceived){
+                    NSLog(@"We already have this packet. Sending ack and ignoring.");
+                    [self sendAck:seqnum receivedLen:lenReceived toUUID:uuid];
+                    return;
+                }
+                
                 [packets addObject:packet];
                 [self sortPackets:packets];
                 
@@ -205,6 +213,11 @@
 }
 
 - (void)sendPacket:(RDPPacket *)packet {
+    int random = arc4random_uniform(10);
+    if (random > 5){
+        return;
+    }
+    
     packet.sent = YES;
     time_t now;
     time(&now);

@@ -16,6 +16,7 @@
         self.sent = NO;
         self.acknowledged = NO;
         self.sentTime = 0;
+        self.didNotReceiveCount = 0;
         
         if (syn->packet_type == LINKLAYER_PROTOCOL_PACKET_TYPE_SYN){
             self.seqNum = syn->seq_num;

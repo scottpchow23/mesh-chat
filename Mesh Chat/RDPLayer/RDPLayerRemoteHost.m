@@ -10,9 +10,6 @@
 #import "RDPLayer.h"
 #import <pthread.h>
 
-#define SLIDING_WINDOW 3
-#define SLIDING_WINDOW_TIMEOUT 5
-
 @interface RDPLayerRemoteHost() {
     pthread_mutex_t _lock;
     pthread_mutex_t _threadLock;

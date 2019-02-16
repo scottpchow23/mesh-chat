@@ -9,6 +9,9 @@
 #import <Foundation/Foundation.h>
 #import "RDPPacket.h"
 
+#define SLIDING_WINDOW 3
+#define SLIDING_WINDOW_TIMEOUT 5
+
 NS_ASSUME_NONNULL_BEGIN
 
 @interface RDPLayerRemoteHost : NSObject
