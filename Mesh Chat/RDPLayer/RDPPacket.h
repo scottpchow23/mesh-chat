@@ -19,6 +19,8 @@ NS_ASSUME_NONNULL_BEGIN
 @property (nonatomic, assign) time_t queuedTime;
 @property (nonatomic, assign) BOOL sent;
 @property (nonatomic, assign) BOOL acknowledged;
+
+- (instancetype)initWithRawPacket:(struct linklayer_protocol_syn *)syn;
 @end
 
 NS_ASSUME_NONNULL_END

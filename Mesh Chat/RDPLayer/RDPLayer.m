@@ -10,42 +10,7 @@
 #import "RDPLayerRemoteHost.h"
 #import "crc32_simple.h"
 #import "Mesh_Chat-Swift.h"
-
-#define SYN_DATA_LEN 127
-#define MTU 158
-
-enum LINKLAYER_PROTOCOL_PACKET_TYPE {
-    LINKLAYER_PROTOCOL_PACKET_TYPE_SYN,
-    LINKLAYER_PROTOCOL_PACKET_TYPE_ACK
-};
-
-struct linklayer_protocol_syncompact {
-    uint8_t packet_type;
-    uuid_t uuid;
-    uint32_t seq_num;
-    uint8_t ttl;
-    uint32_t start;
-    uint8_t len; //if this is less than or equal to 154, this is the last packet
-    uint32_t crc32;
-} __attribute__((packed));
-
-struct linklayer_protocol_syn {
-    uint8_t packet_type;
-    uuid_t uuid;
-    uint32_t seq_num;
-    uint8_t ttl;
-    uint32_t start;
-    uint8_t len; //if this is less than or equal to 154, this is the last packet
-    uint32_t crc32;
-    char data[SYN_DATA_LEN];
-} __attribute__((packed));
-
-struct linklayer_protocol_ack {
-    uint8_t packet_type;
-    uuid_t uuid;
-    uint32_t ack_num;
-    uint32_t len_received;
-} __attribute__((packed));
+#import "RDPLayer-Structs.h"
 
 @interface RDPLayer () <BLEServerDelegate>{
     NSMutableDictionary<NSUUID *, RDPLayerRemoteHost *> *_queuedPackets;
@@ -101,12 +66,7 @@ struct linklayer_protocol_ack {
         crc32(rawPacket.data, packetLen, &crc);
         rawPacket.crc32 = crc;
         
-        RDPPacket *packet = [[RDPPacket alloc] init];
-        packet.seqNum = rawPacket.seq_num;
-        packet.start = start;
-        packet.len = packetLen;
-        packet.peerUUID = uuid;
-        packet.data = [NSData dataWithBytes:(void *)&rawPacket length:sizeof(struct linklayer_protocol_syn)];
+        RDPPacket *packet = [[RDPPacket alloc] initWithRawPacket:&rawPacket];
         
         [remoteHost queuePacket:packet];
         
@@ -185,12 +145,7 @@ struct linklayer_protocol_ack {
                 NSLog(@"Got Good Sequence Packet");
                 
                 //Packet is good, process it
-                RDPPacket *packet = [[RDPPacket alloc] init];
-                packet.peerUUID = uuid;
-                packet.seqNum = seqnum;
-                packet.start = synpacket->start;
-                packet.len = synpacket->len;
-                packet.data = rawPacket;
+                RDPPacket *packet = [[RDPPacket alloc] initWithRawPacket:&synpacket];
                 [packets addObject:packet];
                 [self sortPackets:packets];
                 
@@ -241,10 +196,7 @@ struct linklayer_protocol_ack {
     ack.len_received = len;
     [uuid getUUIDBytes:ack.uuid];
     
-    RDPPacket *packet = [[RDPPacket alloc] init];
-    packet.seqNum = ack.ack_num;
-    packet.peerUUID = uuid;
-    packet.data = [NSData dataWithBytes:&ack length:sizeof(struct linklayer_protocol_ack)];
+    RDPPacket *packet = [[RDPPacket alloc] initWithRawPacket:&ack];
     
     [self sendPacket:packet];
 }

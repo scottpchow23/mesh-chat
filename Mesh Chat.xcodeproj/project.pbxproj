@@ -58,6 +58,7 @@
 		DE32871B2205107C00749231 /* ChatViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatViewController.swift; sourceTree = "<group>"; };
 		DE32871D22051B4100749231 /* Message.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Message.swift; sourceTree = "<group>"; };
 		DE3538C822038D3500BAC216 /* ConversationListViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConversationListViewController.swift; sourceTree = "<group>"; };
+		F108EE212217915700A46245 /* RDPLayer-Structs.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "RDPLayer-Structs.h"; sourceTree = "<group>"; };
 		F154BB03220E5027001B8691 /* Mesh Chat-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "Mesh Chat-Bridging-Header.h"; sourceTree = "<group>"; };
 		F154BB04220E5028001B8691 /* crc32_simple.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = crc32_simple.h; sourceTree = "<group>"; };
 		F154BB05220E5028001B8691 /* RDPLayerRemoteHost.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RDPLayerRemoteHost.m; sourceTree = "<group>"; };
@@ -170,6 +171,7 @@
 			children = (
 				F154BB06220E5028001B8691 /* crc32_simple.c */,
 				F154BB04220E5028001B8691 /* crc32_simple.h */,
+				F108EE212217915700A46245 /* RDPLayer-Structs.h */,
 				F154BB08220E5028001B8691 /* RDPLayer.h */,
 				F154BB07220E5028001B8691 /* RDPLayer.m */,
 				F154BB0B220E5028001B8691 /* RDPLayerRemoteHost.h */,

@@ -9,7 +9,6 @@
 #import <Foundation/Foundation.h>
 #import "RDPPacket.h"
 
-
 NS_ASSUME_NONNULL_BEGIN
 
 @protocol RDPLayerDelegate <NSObject>
