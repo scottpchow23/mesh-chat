@@ -27,15 +27,15 @@ protocol BLEDiscoverPeerDelegate {
     let txUUID = "4eb8b60f-a6c0-4681-b93a-4b29e3b27851"
     @objc var rxUUID = CBUUID(string: "4eb8b60f-a6c0-4681-b93a-4b29e3b27852") // DEFAULT VALUE
     let serviceName = "mesh_chat_dv"
+    var txCharacteristic: CBCharacteristic?
 
     var centralManager: CBCentralManager?
     var peripheralManager: CBPeripheralManager?
     var isAdvertising: Bool
 
-    var writeDVCharacteristics: [CBCharacteristic] = []
-    var peer: CBPeripheral?
-    var txCharacteristic: CBCharacteristic?
-//    var mostRecentPeer: DirectPeer?
+    let thisUUID: String = (UserDefaults.standard.string(forKey: "theUUID")) ?? ""
+    let thisUsername: String = (UserDefaults.standard.string(forKey: "theUsername")) ?? ""
+
     var directPeers: [DirectPeer] = [] {
         didSet {
             if let delegate = peerDelegate {
@@ -43,6 +43,9 @@ protocol BLEDiscoverPeerDelegate {
             }
         }
     }
+
+    var peripheralDict: [CBPeripheral: Bool] = [:]
+
     var delegates: [BLEServerDelegate] = []
 
     private override init() {
@@ -78,15 +81,33 @@ extension BLEServer: CBCentralManagerDelegate {
         if (advertisementData[CBAdvertisementDataLocalNameKey] as? String == serviceName &&
             (advertisementData[CBAdvertisementDataServiceUUIDsKey] as? [CBUUID])?.first == CBUUID(string: serviceUUID)) {
             print("Found peripheral advertising mesh service: \(String(describing: peripheral.name))")
-            peer = peripheral
-            peer?.delegate = self
-            centralManager?.connect(peripheral, options: nil)
+            peripheralDict[peripheral] = false
+            peripheral.delegate = self
+            DispatchQueue.main.asyncAfter(deadline: .now() + 2.5) {
+                print("Connecting to \(peripheral.identifier)")
+                self.centralManager?.connect(peripheral, options: nil)
+            }
         }
 
     }
 
     func centralManager(_ central: CBCentralManager, didConnect peripheral: CBPeripheral) {
         peripheral.discoverServices([CBUUID(string: serviceUUID)])
+        peripheralDict[peripheral] = true
+        for (peripheral, didConnect) in peripheralDict {
+            if (!didConnect) {
+                centralManager?.connect(peripheral, options: nil)
+                break
+            }
+        }
+    }
+
+    func centralManager(_ central: CBCentralManager, didDisconnectPeripheral peripheral: CBPeripheral, error: Error?) {
+        directPeers.removeAll { (peer) -> Bool in
+            print("Peripheral \(peripheral.identifier) disconnected.")
+            return peer.peripheral.identifier == peripheral.identifier
+        }
+        centralManager?.scanForPeripherals(withServices: [CBUUID(string: serviceUUID)], options: nil)
     }
 
 
@@ -102,29 +123,44 @@ extension BLEServer: CBPeripheralDelegate {
     }
 
     func peripheral(_ peripheral: CBPeripheral, didDiscoverCharacteristicsFor service: CBService, error: Error?) {
+
         if (service.characteristics?.count != 2) { return }
 
-        var string: String?
-
+        var char: CBCharacteristic?
+        var rxChar: CBCharacteristic?
         for characteristic in service.characteristics! {
             if (characteristic.uuid == CBUUID(string: txUUID)) {
-                self.txCharacteristic = characteristic
-
+                char = characteristic
+                txCharacteristic = characteristic
             } else {
-                print ("We got: \(characteristic.uuid.uuidString)")
-                string = characteristic.uuid.uuidString
+                rxChar = characteristic
             }
         }
-        guard let txCharacteristic = txCharacteristic,
-            let uuidString = string,
-            let uuid = UUID(uuidString: uuidString) else {
-            print("Didn't discover all required characteristics on the peripheral's mesh service")
+        if let rxChar = rxChar {
+            peripheral.readValue(for: rxChar)
+        }
+    }
+
+    func peripheral(_ peripheral: CBPeripheral, didUpdateValueFor characteristic: CBCharacteristic, error: Error?) {
+        guard let data = characteristic.value,
+            let userAndId = try? JSONDecoder().decode(UserAndId.self, from: data),
+            let txChar = txCharacteristic,
+            let uuid = UUID(uuidString: userAndId.uuid) else {
+            print("Couldn't gather all information needed for a direct peer")
             return
         }
+        self.directPeers.append(DirectPeer(peripheral, uuid: uuid, name: userAndId.name, txCharacteristic: txChar))
+    }
 
-
-//        self.mostRecentPeer = DirectPeer(peripheral, uuid: uuid, txCharacteristic: txCharacteristic)
-        self.directPeers.append(DirectPeer(peripheral, uuid: uuid, txCharacteristic: txCharacteristic))
+    func peripheral(_ peripheral: CBPeripheral, didModifyServices invalidatedServices: [CBService]) {
+        let serviceInvalid = invalidatedServices.contains { (service) -> Bool in
+            return service.uuid.uuidString == serviceUUID
+        }
+        if (serviceInvalid) {
+            directPeers.removeAll { (peer) -> Bool in
+                return peer.peripheral.identifier == peripheral.identifier
+            }
+        }
     }
 }
 
@@ -170,8 +206,21 @@ extension BLEServer: CBPeripheralManagerDelegate {
                 }
             }
         }
+    }
 
+    struct UserAndId: Codable {
+        var uuid: String
+        var name: String
+    }
 
+    func peripheralManager(_ peripheral: CBPeripheralManager, didReceiveRead request: CBATTRequest) {
+        if request.characteristic.uuid == rxUUID {
+            let userAndId = UserAndId(uuid: thisUUID, name: thisUsername)
+            if let data = try? JSONEncoder().encode(userAndId) {
+                request.value = data
+                peripheralManager?.respond(to: request, withResult: .success)
+            }
+        }
     }
 
     fileprivate func createServices() {

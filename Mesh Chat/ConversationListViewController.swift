@@ -38,7 +38,7 @@ class ConversationListViewController: UITableViewController {
     
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: CellIdentifier, for: indexPath)
-        cell.textLabel?.text = peers[indexPath.row].uuid.uuidString
+        cell.textLabel?.text = peers[indexPath.row].name
         // Configure the cell...
         // Lines 41 - 54 are MVP
 //        if(indexPath.row == 0)
