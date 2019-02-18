@@ -13,6 +13,7 @@ struct DirectPeer {
 
     var peripheral: CBPeripheral
     var uuid: UUID
+    var name: String?
     var txCharacteristic: CBCharacteristic
 
     init(_ peripheral: CBPeripheral, uuid: UUID, txCharacteristic: CBCharacteristic) {

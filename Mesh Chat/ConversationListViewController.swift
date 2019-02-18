@@ -14,10 +14,12 @@ class ConversationListViewController: UITableViewController {
     
     
     let CellIdentifier = "LabelCell"
+
+    var peers: [DirectPeer] = BLEServer.instance.directPeers
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
+        BLEServer.instance.peerDelegate = self
         tableView.register(UITableViewCell.classForCoder(), forCellReuseIdentifier: CellIdentifier)
     }
 
@@ -30,33 +32,33 @@ class ConversationListViewController: UITableViewController {
 
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         // One row in each section
-        return 3
+        return peers.count
     }
 
     
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: CellIdentifier, for: indexPath)
-
+        cell.textLabel?.text = peers[indexPath.row].uuid.uuidString
         // Configure the cell...
         // Lines 41 - 54 are MVP
-        if(indexPath.row == 0)
-        {
-            // Show first default message
-            cell.textLabel?.text = "Chat with Scott" // finish this
-            
-        }
-        else if(indexPath.row == 1)
-        {
-            // Show second default message
-            cell.textLabel?.text = "Chat with Prabal" // finish this
-        }
-        else if(indexPath.row == 2)
-        {
-            // Show second default message
-            cell.textLabel?.text = user // TEST
-        }
-        else{
-            cell.textLabel?.text = "Section \(indexPath.section) Row \(indexPath.row)"}
+//        if(indexPath.row == 0)
+//        {
+//            // Show first default message
+//            cell.textLabel?.text = "Chat with Scott" // finish this
+//
+//        }
+//        else if(indexPath.row == 1)
+//        {
+//            // Show second default message
+//            cell.textLabel?.text = "Chat with Prabal" // finish this
+//        }
+//        else if(indexPath.row == 2)
+//        {
+//            // Show second default message
+//            cell.textLabel?.text = user // TEST
+//        }
+//        else{
+//            cell.textLabel?.text = "Section \(indexPath.section) Row \(indexPath.row)"}
 
         return cell
     }
@@ -69,8 +71,16 @@ class ConversationListViewController: UITableViewController {
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         tableView.deselectRow(at: indexPath, animated: true)
         let chatViewController = ChatViewController()
+        chatViewController.peer = peers[indexPath.row]
         self.navigationController?.pushViewController(chatViewController, animated: true)
     }
 
 
+}
+
+extension ConversationListViewController: BLEDiscoverPeerDelegate {
+    func didModifyPeerList() {
+        peers = BLEServer.instance.directPeers
+        tableView.reloadData()
+    }
 }

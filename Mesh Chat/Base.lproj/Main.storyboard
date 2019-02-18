@@ -28,9 +28,9 @@
                                         <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                         <textInputTraits key="textInputTraits" returnKeyType="done" enablesReturnKeyAutomatically="YES"/>
                                         <connections>
-                                            <action selector="DidEndOnExit:" destination="BYZ-38-t0r" eventType="editingDidEndOnExit" id="SBk-zh-kqi"/>
                                             <action selector="clearField:" destination="BYZ-38-t0r" eventType="touchDown" id="6bi-43-WUv"/>
-                                            <action selector="di:" destination="BYZ-38-t0r" eventType="touchUpOutside" id="x4L-aV-Sf6"/>
+                                            <action selector="dismissKeyBoard:" destination="BYZ-38-t0r" eventType="editingDidEndOnExit" id="90o-vb-KqE"/>
+                                            <action selector="dismissKeyBoard:" destination="BYZ-38-t0r" eventType="touchUpOutside" id="WXd-hN-bqc"/>
                                             <action selector="usernameValueChanged:" destination="BYZ-38-t0r" eventType="valueChanged" id="zb8-rO-GK1"/>
                                         </connections>
                                     </textField>

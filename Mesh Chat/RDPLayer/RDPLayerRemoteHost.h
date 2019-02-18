@@ -9,16 +9,21 @@
 #import <Foundation/Foundation.h>
 #import "RDPPacket.h"
 
+#define SLIDING_WINDOW 3
+#define SLIDING_WINDOW_TIMEOUT 5
+
 NS_ASSUME_NONNULL_BEGIN
 
 @interface RDPLayerRemoteHost : NSObject
-@property (nonatomic, strong) NSUUID *peer;
+@property (nonatomic, strong, readonly) NSUUID *peer;
 @property (nonatomic, assign) uint32_t seqNum;
-@property (nonatomic, strong) NSMutableDictionary<NSNumber *, NSMutableArray<RDPPacket *> *> *queuedPackets;
-@property (nonatomic, strong) NSMutableDictionary<NSNumber *, NSMutableArray<RDPPacket *> *> *receivedPackets;
-@property (nonatomic, assign) pthread_mutex_t threadLock;
-@property (nonatomic, assign) bool threadIsRunning;
-@property (nonatomic, assign) pthread_t thread;
+@property (nonatomic, strong, readonly) NSMutableDictionary<NSNumber *, NSMutableArray<RDPPacket *> *> *queuedPackets;
+@property (nonatomic, strong, readonly) NSMutableDictionary<NSNumber *, NSMutableArray<RDPPacket *> *> *receivedPackets;
+@property (nonatomic, strong, readonly) NSMutableArray *rawQueuedPackets;
+
+- (instancetype)initWithPeer:(NSUUID *)uuid;
+- (void)queuePacket:(RDPPacket *)packet;
+- (void)startThread;
 @end
 
 NS_ASSUME_NONNULL_END

@@ -11,19 +11,21 @@ import CoreBluetooth
 
 
 @objc protocol BLEServerDelegate {
-    func didReceivePacket(_ : Data, uuid: UUID)
+    func didReceivePacket(_: Data, uuid: UUID)
+}
+
+protocol BLEDiscoverPeerDelegate {
+    func didModifyPeerList()
 }
 
 @objc class BLEServer: NSObject {
     @objc static let instance = BLEServer()
 
     var delegate: BLEServerDelegate?
-    // Service UUID
+    var peerDelegate: BLEDiscoverPeerDelegate?
     let serviceUUID = "4eb8b60f-a6c0-4681-b93a-4b29e3b27850"
-    // Characteristic UUIDs
     let txUUID = "4eb8b60f-a6c0-4681-b93a-4b29e3b27851"
     @objc var rxUUID = CBUUID(string: "4eb8b60f-a6c0-4681-b93a-4b29e3b27852") // DEFAULT VALUE
-    // Service Name
     let serviceName = "mesh_chat_dv"
 
     var centralManager: CBCentralManager?
@@ -33,8 +35,14 @@ import CoreBluetooth
     var writeDVCharacteristics: [CBCharacteristic] = []
     var peer: CBPeripheral?
     var txCharacteristic: CBCharacteristic?
-    var mostRecentPeer: DirectPeer?
-    var directPeers: [DirectPeer] = []
+//    var mostRecentPeer: DirectPeer?
+    var directPeers: [DirectPeer] = [] {
+        didSet {
+            if let delegate = peerDelegate {
+                delegate.didModifyPeerList()
+            }
+        }
+    }
     var delegates: [BLEServerDelegate] = []
 
     private override init() {
@@ -115,7 +123,7 @@ extension BLEServer: CBPeripheralDelegate {
         }
 
 
-        self.mostRecentPeer = DirectPeer(peripheral, uuid: uuid, txCharacteristic: txCharacteristic)
+//        self.mostRecentPeer = DirectPeer(peripheral, uuid: uuid, txCharacteristic: txCharacteristic)
         self.directPeers.append(DirectPeer(peripheral, uuid: uuid, txCharacteristic: txCharacteristic))
     }
 }
@@ -144,8 +152,6 @@ extension BLEServer: CBPeripheralManagerDelegate {
     func peripheralManager(_ peripheral: CBPeripheralManager, didReceiveWrite requests: [CBATTRequest]) {
         for request in requests {
             if let data = request.value {
-                let input = String(bytes: data, encoding: String.Encoding.ascii) ?? "Couldn't decode"
-                print("Got a write request with input: \(input)")
 
                 switch requests.first?.characteristic.uuid {
                 case CBUUID(string: txUUID):
@@ -153,6 +159,7 @@ extension BLEServer: CBPeripheralManagerDelegate {
                 default:
                     print("Not sure what this packet was for")
                 }
+
                 let senderUUID = request.central.identifier
                 RDPLayer.sharedInstance().didReceivePacket(data)
                 if let delegate = self.delegate {
