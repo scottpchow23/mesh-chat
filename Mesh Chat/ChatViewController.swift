@@ -35,7 +35,7 @@ class ChatViewController: MessagesViewController {
 
 extension ChatViewController: MessagesDataSource {
     func currentSender() -> Sender {
-        // Looks like this should work
+        // Looks like this should work, unless the packet is being forwarded
         return self.reciever
     }
     
