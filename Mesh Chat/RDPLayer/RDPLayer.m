@@ -39,7 +39,7 @@
 }
 
 - (void)queueData:(NSData *)data toUUID:(NSUUID *)uuid {
-    NSLog(@"Queuing data of length %d", data.length);
+    NSLog(@"Queuing data of length %lu", (unsigned long)data.length);
     
     RDPLayerRemoteHost *remoteHost = [_queuedPackets objectForKey:uuid];
     if (!remoteHost){
@@ -153,7 +153,8 @@
                 
                 //Packet is good, process it
                 RDPPacket *packet = [[RDPPacket alloc] initWithRawPacket:synpacket uuid:uuid];
-                if (packet.start < lenReceived){
+                NSLog(@"Packet seq:%d, start: %d, len: %d", packet.seqNum, packet.start, packet.len);
+                if ([packets containsObject:packet]){
                     NSLog(@"We already have this packet. Sending ack and ignoring.");
                     [self sendAck:seqnum receivedLen:lenReceived toUUID:uuid];
                     return;
@@ -200,12 +201,31 @@
             
             NSLog(@"Received ack for sequence number %d, length %d", ack->ack_num, ack->len_received);
             
+            RDPPacket *ackPacket = [[RDPPacket alloc] initWithRawPacket:ack uuid:uuid];
+            RDPPacket *lastAckPacket = [remoteHost.lastAck objectForKey:@(ack->ack_num)];
+            
+            if ([lastAckPacket isEqual:ackPacket]){
+                NSLog(@"Got duplicate ACK!");
+                for (RDPPacket *packet in queuedPackets){
+                    if (packet.start >= ack->len_received){
+                        if (!packet.acknowledged && packet.sent){
+                            packet.sent = NO;
+                            packet.sentTime = 0;
+                            NSLog(@"Marked packet for sequence number %d, start %d, length %d as dropped.", packet.seqNum, packet.start, packet.len);
+                        }
+                    }
+                }
+            }
+            [remoteHost.lastAck setObject:ackPacket forKey:@(ack->ack_num)];
+            
             NSMutableArray *idxToRemove = [NSMutableArray array];
             for (RDPPacket *packet in queuedPackets){
                 if (packet.start + packet.len <= ack->len_received){
-                    packet.acknowledged = YES;
-                    NSLog(@"Marked packet for sequence number %d, start %d, length %d as acknowledged.", packet.seqNum, packet.start, packet.len);
-                    [idxToRemove insertObject:@([queuedPackets indexOfObject:packet]) atIndex:0];
+                    if (!packet.acknowledged){
+                        packet.acknowledged = YES;
+                        NSLog(@"Marked packet for sequence number %d, start %d, length %d as acknowledged.", packet.seqNum, packet.start, packet.len);
+                        [idxToRemove insertObject:@([queuedPackets indexOfObject:packet]) atIndex:0];
+                    }
                 }
             }
             
@@ -232,20 +252,22 @@
     
     RDPPacket *packet = [[RDPPacket alloc] initWithRawPacket:&ack uuid:uuid];
     
-    [self sendPacket:packet];
+    [self sendPacket:packet bypassDrops:YES];
 }
 
 - (void)sendPacket:(RDPPacket *)packet {
-    /*int random = arc4random_uniform(10);
-    if (random > 5){
-        return;
-    }*/ //Uncomment to simulate packet drop
-    
     packet.sent = YES;
     time_t now;
     time(&now);
     
     packet.sentTime = now;
+    
+    /*int random = arc4random_uniform(10);
+    if (random > 5){
+        return;
+    }*/ //Uncomment to simulate packet drop
+    
+    
     [_delegate sendData:packet.data toUUID:packet.peerUUID];
 }
 

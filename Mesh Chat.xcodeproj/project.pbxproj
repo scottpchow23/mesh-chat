@@ -7,9 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		6BBC951988086C8BDFE45A54 /* Pods_Mesh_Chat.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A668400EDD4FD90E1B32CB38 /* Pods_Mesh_Chat.framework */; };
-		953863FDE3A89576ECC6D607 /* (null) in Frameworks */ = {isa = PBXBuildFile; };
-		A1A2DEEF408286FD0D2F5A36 /* Pods_Mesh_ChatTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F693012077135E7FC277F338 /* Pods_Mesh_ChatTests.framework */; };
+		0829A72CA59083BBA9B341B1 /* Pods_Mesh_ChatTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 351C9A0A2097125A3227AFAE /* Pods_Mesh_ChatTests.framework */; };
 		B8F8672C21F7F7AA003F6DE3 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = B8F8672B21F7F7AA003F6DE3 /* AppDelegate.swift */; };
 		B8F8672E21F7F7AA003F6DE3 /* StartViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B8F8672D21F7F7AA003F6DE3 /* StartViewController.swift */; };
 		B8F8673121F7F7AA003F6DE3 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = B8F8672F21F7F7AA003F6DE3 /* Main.storyboard */; };
@@ -18,6 +16,7 @@
 		B8F8674121F7F7AC003F6DE3 /* Mesh_ChatTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = B8F8674021F7F7AC003F6DE3 /* Mesh_ChatTests.swift */; };
 		B8F8675C21FA809A003F6DE3 /* BLEServer.swift in Sources */ = {isa = PBXBuildFile; fileRef = B8F8675B21FA809A003F6DE3 /* BLEServer.swift */; };
 		B8F867B421FFCF96003F6DE3 /* DirectPeer.swift in Sources */ = {isa = PBXBuildFile; fileRef = B8F867B321FFCF96003F6DE3 /* DirectPeer.swift */; };
+		CBBCDCBAEDD3EF6BCB81F467 /* Pods_Mesh_Chat.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F53E6A1D633643FEF57D5997 /* Pods_Mesh_Chat.framework */; };
 		DE32871C2205107C00749231 /* ChatViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DE32871B2205107C00749231 /* ChatViewController.swift */; };
 		DE32871E22051B4100749231 /* Message.swift in Sources */ = {isa = PBXBuildFile; fileRef = DE32871D22051B4100749231 /* Message.swift */; };
 		DE3538C922038D3500BAC216 /* ConversationListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DE3538C822038D3500BAC216 /* ConversationListViewController.swift */; };
@@ -38,9 +37,9 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
-		3A6870184924F734002C23C7 /* Pods-Mesh Chat.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Mesh Chat.release.xcconfig"; path = "Target Support Files/Pods-Mesh Chat/Pods-Mesh Chat.release.xcconfig"; sourceTree = "<group>"; };
-		503907934598A2306A1F034A /* Pods-Mesh Chat.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Mesh Chat.debug.xcconfig"; path = "Target Support Files/Pods-Mesh Chat/Pods-Mesh Chat.debug.xcconfig"; sourceTree = "<group>"; };
-		A668400EDD4FD90E1B32CB38 /* Pods_Mesh_Chat.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Mesh_Chat.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		351C9A0A2097125A3227AFAE /* Pods_Mesh_ChatTests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Mesh_ChatTests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		90FB92DE52285021814C045C /* Pods-Mesh Chat.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Mesh Chat.debug.xcconfig"; path = "Pods/Target Support Files/Pods-Mesh Chat/Pods-Mesh Chat.debug.xcconfig"; sourceTree = "<group>"; };
+		9E298653B1B8BA5289670821 /* Pods-Mesh ChatTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Mesh ChatTests.debug.xcconfig"; path = "Pods/Target Support Files/Pods-Mesh ChatTests/Pods-Mesh ChatTests.debug.xcconfig"; sourceTree = "<group>"; };
 		B8F8672821F7F7AA003F6DE3 /* Mesh Chat.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Mesh Chat.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		B8F8672B21F7F7AA003F6DE3 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		B8F8672D21F7F7AA003F6DE3 /* StartViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StartViewController.swift; sourceTree = "<group>"; };
@@ -53,11 +52,11 @@
 		B8F8674221F7F7AC003F6DE3 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		B8F8675B21FA809A003F6DE3 /* BLEServer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BLEServer.swift; sourceTree = "<group>"; };
 		B8F867B321FFCF96003F6DE3 /* DirectPeer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DirectPeer.swift; sourceTree = "<group>"; };
-		BD61AC947FFC60142A999E8A /* Pods-Mesh ChatTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Mesh ChatTests.debug.xcconfig"; path = "Target Support Files/Pods-Mesh ChatTests/Pods-Mesh ChatTests.debug.xcconfig"; sourceTree = "<group>"; };
+		C0B198B5D57B34D862A3DA71 /* Pods-Mesh Chat.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Mesh Chat.release.xcconfig"; path = "Pods/Target Support Files/Pods-Mesh Chat/Pods-Mesh Chat.release.xcconfig"; sourceTree = "<group>"; };
+		C5661F84401553CFC675E257 /* Pods-Mesh ChatTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Mesh ChatTests.release.xcconfig"; path = "Pods/Target Support Files/Pods-Mesh ChatTests/Pods-Mesh ChatTests.release.xcconfig"; sourceTree = "<group>"; };
 		DE32871B2205107C00749231 /* ChatViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatViewController.swift; sourceTree = "<group>"; };
 		DE32871D22051B4100749231 /* Message.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Message.swift; sourceTree = "<group>"; };
 		DE3538C822038D3500BAC216 /* ConversationListViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConversationListViewController.swift; sourceTree = "<group>"; };
-		E61CF155E4CBD327C7A94F9E /* Pods-Mesh ChatTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Mesh ChatTests.release.xcconfig"; path = "Target Support Files/Pods-Mesh ChatTests/Pods-Mesh ChatTests.release.xcconfig"; sourceTree = "<group>"; };
 		F108EE212217915700A46245 /* RDPLayer-Structs.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "RDPLayer-Structs.h"; sourceTree = "<group>"; };
 		F154BB03220E5027001B8691 /* Mesh Chat-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "Mesh Chat-Bridging-Header.h"; sourceTree = "<group>"; };
 		F154BB04220E5028001B8691 /* crc32_simple.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = crc32_simple.h; sourceTree = "<group>"; };
@@ -68,7 +67,7 @@
 		F154BB09220E5028001B8691 /* RDPPacket.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RDPPacket.h; sourceTree = "<group>"; };
 		F154BB0A220E5028001B8691 /* RDPPacket.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RDPPacket.m; sourceTree = "<group>"; };
 		F154BB0B220E5028001B8691 /* RDPLayerRemoteHost.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RDPLayerRemoteHost.h; sourceTree = "<group>"; };
-		F693012077135E7FC277F338 /* Pods_Mesh_ChatTests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Mesh_ChatTests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		F53E6A1D633643FEF57D5997 /* Pods_Mesh_Chat.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Mesh_Chat.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -76,7 +75,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				6BBC951988086C8BDFE45A54 /* Pods_Mesh_Chat.framework in Frameworks */,
+				CBBCDCBAEDD3EF6BCB81F467 /* Pods_Mesh_Chat.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -84,21 +83,31 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				953863FDE3A89576ECC6D607 /* (null) in Frameworks */,
-				A1A2DEEF408286FD0D2F5A36 /* Pods_Mesh_ChatTests.framework in Frameworks */,
+				0829A72CA59083BBA9B341B1 /* Pods_Mesh_ChatTests.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
-		7F48694CD2C2609BC31DB714 /* Frameworks */ = {
+		234A234268F957F41A9FCD72 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
-				A668400EDD4FD90E1B32CB38 /* Pods_Mesh_Chat.framework */,
-				F693012077135E7FC277F338 /* Pods_Mesh_ChatTests.framework */,
+				F53E6A1D633643FEF57D5997 /* Pods_Mesh_Chat.framework */,
+				351C9A0A2097125A3227AFAE /* Pods_Mesh_ChatTests.framework */,
 			);
 			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		91A52E33B5FD45E46620DFD2 /* Pods */ = {
+			isa = PBXGroup;
+			children = (
+				90FB92DE52285021814C045C /* Pods-Mesh Chat.debug.xcconfig */,
+				C0B198B5D57B34D862A3DA71 /* Pods-Mesh Chat.release.xcconfig */,
+				9E298653B1B8BA5289670821 /* Pods-Mesh ChatTests.debug.xcconfig */,
+				C5661F84401553CFC675E257 /* Pods-Mesh ChatTests.release.xcconfig */,
+			);
+			name = Pods;
 			sourceTree = "<group>";
 		};
 		B8F8671F21F7F7AA003F6DE3 = {
@@ -107,8 +116,8 @@
 				B8F8672A21F7F7AA003F6DE3 /* Mesh Chat */,
 				B8F8673F21F7F7AC003F6DE3 /* Mesh ChatTests */,
 				B8F8672921F7F7AA003F6DE3 /* Products */,
-				DB38EC1999435B0DF11C035D /* Pods */,
-				7F48694CD2C2609BC31DB714 /* Frameworks */,
+				91A52E33B5FD45E46620DFD2 /* Pods */,
+				234A234268F957F41A9FCD72 /* Frameworks */,
 			);
 			sourceTree = "<group>";
 		};
@@ -157,17 +166,6 @@
 			path = BLELinkLayer;
 			sourceTree = "<group>";
 		};
-		DB38EC1999435B0DF11C035D /* Pods */ = {
-			isa = PBXGroup;
-			children = (
-				503907934598A2306A1F034A /* Pods-Mesh Chat.debug.xcconfig */,
-				3A6870184924F734002C23C7 /* Pods-Mesh Chat.release.xcconfig */,
-				BD61AC947FFC60142A999E8A /* Pods-Mesh ChatTests.debug.xcconfig */,
-				E61CF155E4CBD327C7A94F9E /* Pods-Mesh ChatTests.release.xcconfig */,
-			);
-			path = Pods;
-			sourceTree = "<group>";
-		};
 		F154BB02220E501C001B8691 /* RDPLayer */ = {
 			isa = PBXGroup;
 			children = (
@@ -192,11 +190,11 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = B8F8674521F7F7AC003F6DE3 /* Build configuration list for PBXNativeTarget "Mesh Chat" */;
 			buildPhases = (
-				B03759DA892E5096A6949A81 /* [CP] Check Pods Manifest.lock */,
+				AD6DEB641B9F52069A9C8BEF /* [CP] Check Pods Manifest.lock */,
 				B8F8672421F7F7AA003F6DE3 /* Sources */,
 				B8F8672521F7F7AA003F6DE3 /* Frameworks */,
 				B8F8672621F7F7AA003F6DE3 /* Resources */,
-				226725A16666346180CADD3E /* [CP] Embed Pods Frameworks */,
+				2B0CEBBD01458E0CA3739300 /* [CP] Embed Pods Frameworks */,
 			);
 			buildRules = (
 			);
@@ -211,7 +209,7 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = B8F8674821F7F7AC003F6DE3 /* Build configuration list for PBXNativeTarget "Mesh ChatTests" */;
 			buildPhases = (
-				0514B1B13561F01FD3B0AF71 /* [CP] Check Pods Manifest.lock */,
+				B438CEC8613A25F7817B6571 /* [CP] Check Pods Manifest.lock */,
 				B8F8673821F7F7AC003F6DE3 /* Sources */,
 				B8F8673921F7F7AC003F6DE3 /* Frameworks */,
 				B8F8673A21F7F7AC003F6DE3 /* Resources */,
@@ -286,7 +284,7 @@
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXShellScriptBuildPhase section */
-		0514B1B13561F01FD3B0AF71 /* [CP] Check Pods Manifest.lock */ = {
+		2B0CEBBD01458E0CA3739300 /* [CP] Embed Pods Frameworks */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -294,29 +292,7 @@
 			inputFileListPaths = (
 			);
 			inputPaths = (
-				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
-				"${PODS_ROOT}/Manifest.lock",
-			);
-			name = "[CP] Check Pods Manifest.lock";
-			outputFileListPaths = (
-			);
-			outputPaths = (
-				"$(DERIVED_FILE_DIR)/Pods-Mesh ChatTests-checkManifestLockResult.txt",
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
-			showEnvVarsInLog = 0;
-		};
-		226725A16666346180CADD3E /* [CP] Embed Pods Frameworks */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputFileListPaths = (
-			);
-			inputPaths = (
-				"${PODS_ROOT}/Target Support Files/Pods-Mesh Chat/Pods-Mesh Chat-frameworks.sh",
+				"${SRCROOT}/Pods/Target Support Files/Pods-Mesh Chat/Pods-Mesh Chat-frameworks.sh",
 				"${BUILT_PRODUCTS_DIR}/MessageKit/MessageKit.framework",
 			);
 			name = "[CP] Embed Pods Frameworks";
@@ -327,10 +303,10 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-Mesh Chat/Pods-Mesh Chat-frameworks.sh\"\n";
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-Mesh Chat/Pods-Mesh Chat-frameworks.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
-		B03759DA892E5096A6949A81 /* [CP] Check Pods Manifest.lock */ = {
+		AD6DEB641B9F52069A9C8BEF /* [CP] Check Pods Manifest.lock */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -346,6 +322,28 @@
 			);
 			outputPaths = (
 				"$(DERIVED_FILE_DIR)/Pods-Mesh Chat-checkManifestLockResult.txt",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
+			showEnvVarsInLog = 0;
+		};
+		B438CEC8613A25F7817B6571 /* [CP] Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
+				"${PODS_ROOT}/Manifest.lock",
+			);
+			name = "[CP] Check Pods Manifest.lock";
+			outputFileListPaths = (
+			);
+			outputPaths = (
+				"$(DERIVED_FILE_DIR)/Pods-Mesh ChatTests-checkManifestLockResult.txt",
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
@@ -529,12 +527,12 @@
 		};
 		B8F8674621F7F7AC003F6DE3 /* Debug */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 503907934598A2306A1F034A /* Pods-Mesh Chat.debug.xcconfig */;
+			baseConfigurationReference = 90FB92DE52285021814C045C /* Pods-Mesh Chat.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_STYLE = Automatic;
-				DEVELOPMENT_TEAM = 3BP6E4VS73;
+				DEVELOPMENT_TEAM = "";
 				INFOPLIST_FILE = "Mesh Chat/Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 10.0;
 				LD_RUNPATH_SEARCH_PATHS = (
@@ -552,12 +550,12 @@
 		};
 		B8F8674721F7F7AC003F6DE3 /* Release */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 3A6870184924F734002C23C7 /* Pods-Mesh Chat.release.xcconfig */;
+			baseConfigurationReference = C0B198B5D57B34D862A3DA71 /* Pods-Mesh Chat.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_STYLE = Automatic;
-				DEVELOPMENT_TEAM = 3BP6E4VS73;
+				DEVELOPMENT_TEAM = "";
 				INFOPLIST_FILE = "Mesh Chat/Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 10.0;
 				LD_RUNPATH_SEARCH_PATHS = (
@@ -574,7 +572,7 @@
 		};
 		B8F8674921F7F7AC003F6DE3 /* Debug */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = BD61AC947FFC60142A999E8A /* Pods-Mesh ChatTests.debug.xcconfig */;
+			baseConfigurationReference = 9E298653B1B8BA5289670821 /* Pods-Mesh ChatTests.debug.xcconfig */;
 			buildSettings = {
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				BUNDLE_LOADER = "$(TEST_HOST)";
@@ -596,7 +594,7 @@
 		};
 		B8F8674A21F7F7AC003F6DE3 /* Release */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = E61CF155E4CBD327C7A94F9E /* Pods-Mesh ChatTests.release.xcconfig */;
+			baseConfigurationReference = C5661F84401553CFC675E257 /* Pods-Mesh ChatTests.release.xcconfig */;
 			buildSettings = {
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				BUNDLE_LOADER = "$(TEST_HOST)";
