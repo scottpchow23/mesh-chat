@@ -123,19 +123,17 @@ extension BLEServer: CBPeripheralDelegate {
     }
 
     func peripheral(_ peripheral: CBPeripheral, didDiscoverCharacteristicsFor service: CBService, error: Error?) {
-
         if (service.characteristics?.count != 2) { return }
-
-        var char: CBCharacteristic?
         var rxChar: CBCharacteristic?
+
         for characteristic in service.characteristics! {
             if (characteristic.uuid == CBUUID(string: txUUID)) {
-                char = characteristic
                 txCharacteristic = characteristic
             } else {
                 rxChar = characteristic
             }
         }
+
         if let rxChar = rxChar {
             peripheral.readValue(for: rxChar)
         }
