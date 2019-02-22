@@ -10,7 +10,7 @@
 #import "RDPPacket.h"
 
 #define SLIDING_WINDOW 3
-#define SLIDING_WINDOW_TIMEOUT 5
+#define SLIDING_WINDOW_TIMEOUT 2
 
 NS_ASSUME_NONNULL_BEGIN
 
@@ -19,6 +19,7 @@ NS_ASSUME_NONNULL_BEGIN
 @property (nonatomic, assign) uint32_t seqNum;
 @property (nonatomic, strong, readonly) NSMutableDictionary<NSNumber *, NSMutableArray<RDPPacket *> *> *queuedPackets;
 @property (nonatomic, strong, readonly) NSMutableDictionary<NSNumber *, NSMutableArray<RDPPacket *> *> *receivedPackets;
+@property (nonatomic, strong, readonly) NSMutableDictionary<NSNumber *, RDPPacket *> *lastAck;
 @property (nonatomic, strong, readonly) NSMutableArray *rawQueuedPackets;
 
 - (instancetype)initWithPeer:(NSUUID *)uuid;
