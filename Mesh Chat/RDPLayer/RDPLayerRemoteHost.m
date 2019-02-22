@@ -37,6 +37,7 @@ void *remoteHostThread(RDPLayerRemoteHost *self){
         self->_seqNum = 0;
         self->_queuedPackets = [NSMutableDictionary dictionary];
         self->_receivedPackets = [NSMutableDictionary dictionary];
+        self->_lastAck = [NSMutableDictionary dictionary];
         self->_rawQueuedPackets = [NSMutableArray array];
         
         self->_threadIsRunning = false;
@@ -86,7 +87,7 @@ void *remoteHostThread(RDPLayerRemoteHost *self){
         for (int i = 0; i < count; i++){
             RDPPacket *packet = [_rawQueuedPackets objectAtIndex:i];
             if (packet.acknowledged){
-                NSLog(@"Packet marked as acknoledged!");
+                NSLog(@"Packet marked as acknowledged!");
                 [packetsToRemove insertObject:@(i) atIndex:0];
                 continue;
             }

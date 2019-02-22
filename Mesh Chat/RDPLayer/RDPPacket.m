@@ -38,4 +38,12 @@
     }
     return self;
 }
+
+- (BOOL)isEqual:(RDPPacket *)other {
+    return (self.seqNum == other.seqNum && [self.peerUUID isEqual:other.peerUUID] && self.start == other.start && self.len == other.len);
+}
+
+- (NSUInteger)hash {
+    return [NSString stringWithFormat:@"%d %@ %d %d", self.seqNum, self.peerUUID.UUIDString, self.start, self.len];
+}
 @end
