@@ -252,7 +252,7 @@
     
     RDPPacket *packet = [[RDPPacket alloc] initWithRawPacket:&ack uuid:uuid];
     
-    [self sendPacket:packet bypassDrops:YES];
+    [self sendPacket:packet];
 }
 
 - (void)sendPacket:(RDPPacket *)packet {
