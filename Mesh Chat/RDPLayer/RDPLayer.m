@@ -241,7 +241,7 @@
 - (void)sendAck:(uint32_t)seq_num receivedLen:(uint32_t)len toUUID:(NSUUID *)uuid {
     NSLog(@"Sent ack for sequence number %d, length %d", seq_num, len);
     
-    NSUUID *ourUUID = [[NSUUID alloc] initWithUUIDString:BLEServer.instance.rxUUID.UUIDString];
+    NSUUID *ourUUID = [[NSUUID alloc] initWithUUIDString:[[NSUserDefaults standardUserDefaults] stringForKey:@"theUUID"]];
     
     struct linklayer_protocol_ack ack;
     bzero(&ack, sizeof(struct linklayer_protocol_ack));
