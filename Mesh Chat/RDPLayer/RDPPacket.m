@@ -33,6 +33,8 @@
             struct linklayer_protocol_ack *ack = syn;
             self.seqNum = ack->ack_num;
             self.peerUUID = uuid;
+            self.start = 0;
+            self.len = ack->len_received;
             self.data = [NSData dataWithBytes:ack length:sizeof(struct linklayer_protocol_ack)];
         }
     }

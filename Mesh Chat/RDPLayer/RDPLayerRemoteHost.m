@@ -45,6 +45,7 @@ void *remoteHostThread(RDPLayerRemoteHost *self){
         self->_seqNum = 0;
         self->_queuedPackets = [NSMutableDictionary dictionary];
         self->_receivedPackets = [NSMutableDictionary dictionary];
+        self->_queuedSize = [NSMutableDictionary dictionary];
         self->_lastAck = [NSMutableDictionary dictionary];
         self->_lastAckCount = [NSMutableDictionary dictionary];
         self->_rawQueuedPackets = [NSMutableArray array];

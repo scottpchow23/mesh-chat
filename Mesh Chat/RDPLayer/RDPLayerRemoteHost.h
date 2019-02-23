@@ -20,6 +20,7 @@ NS_ASSUME_NONNULL_BEGIN
 @property (nonatomic, assign) uint32_t seqNum;
 @property (nonatomic, strong, readonly) NSMutableDictionary<NSNumber *, NSMutableArray<RDPPacket *> *> *queuedPackets;
 @property (nonatomic, strong, readonly) NSMutableDictionary<NSNumber *, NSMutableArray<RDPPacket *> *> *receivedPackets;
+@property (nonatomic, strong, readonly) NSMutableDictionary<NSNumber *, NSNumber *> *queuedSize;
 @property (nonatomic, strong, readonly) NSMutableDictionary<NSNumber *, RDPPacket *> *lastAck;
 @property (nonatomic, strong, readonly) NSMutableDictionary<NSNumber *, NSNumber *> *lastAckCount;
 @property (nonatomic, strong, readonly) NSMutableArray *rawQueuedPackets;

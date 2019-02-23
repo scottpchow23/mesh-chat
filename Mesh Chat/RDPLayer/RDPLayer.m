@@ -46,6 +46,7 @@
         remoteHost = [[RDPLayerRemoteHost alloc] initWithPeer:uuid];
         [_queuedPackets setObject:remoteHost forKey:uuid];
     }
+    [remoteHost.queuedSize setObject:@(data.length) forKey:@(remoteHost.seqNum)];
     
     size_t len = data.length;
     uint32_t start = 0;
@@ -204,11 +205,12 @@
             RDPPacket *ackPacket = [[RDPPacket alloc] initWithRawPacket:ack uuid:uuid];
             RDPPacket *lastAckPacket = [remoteHost.lastAck objectForKey:@(ack->ack_num)];
             NSInteger lastAckCount = [[remoteHost.lastAckCount objectForKey:@(ack->ack_num)] integerValue];
+            NSInteger queuedLen = [[remoteHost.queuedSize objectForKey:@(ack->ack_num)] integerValue];
             
-            if ([lastAckPacket isEqual:ackPacket]){
+            if ([lastAckPacket isEqual:ackPacket] && (queuedLen != 0 && lastAckPacket.len != queuedLen)){
                 NSLog(@"Got duplicate ACK!");
-                if (lastAckCount == 2){
-                    NSLog(@"Got 3 duplicate ACK!");
+                if (lastAckCount >= 2){
+                    NSLog(@"Got 3+ duplicate ACK!");
                     [remoteHost decreaseSlidingWindow];
                     for (RDPPacket *packet in queuedPackets){
                         if (packet.start >= ack->len_received){
