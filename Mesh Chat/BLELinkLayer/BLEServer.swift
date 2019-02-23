@@ -26,7 +26,7 @@ protocol BLEDiscoverPeerDelegate {
     let serviceUUID = "4eb8b60f-a6c0-4681-b93a-4b29e3b27850"
     let txUUID = "4eb8b60f-a6c0-4681-b93a-4b29e3b27851"
     @objc var rxUUID = CBUUID(string: "4eb8b60f-a6c0-4681-b93a-4b29e3b27852") // DEFAULT VALUE
-    let serviceName = "mesh_chat_dv"
+    let serviceName = "mesh_cha" // 8 CHARACTER LIMIT
     var txCharacteristic: CBCharacteristic?
 
     var centralManager: CBCentralManager?
