@@ -9,7 +9,8 @@
 #import <Foundation/Foundation.h>
 #import "RDPPacket.h"
 
-#define SLIDING_WINDOW 3
+#define SLIDING_WINDOW_MIN 5
+#define SLIDING_WINDOW_MAX 512
 #define SLIDING_WINDOW_TIMEOUT 2
 
 NS_ASSUME_NONNULL_BEGIN
@@ -26,6 +27,10 @@ NS_ASSUME_NONNULL_BEGIN
 - (instancetype)initWithPeer:(NSUUID *)uuid;
 - (void)queuePacket:(RDPPacket *)packet;
 - (void)startThread;
+
+- (void)increaseSlidingWindow;
+- (void)decreaseSlidingWindow;
+- (void)resetSlidingWindow;
 @end
 
 NS_ASSUME_NONNULL_END

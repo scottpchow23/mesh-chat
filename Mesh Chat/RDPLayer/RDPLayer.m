@@ -207,8 +207,9 @@
             
             if ([lastAckPacket isEqual:ackPacket]){
                 NSLog(@"Got duplicate ACK!");
-                if (lastAckCount == 1){
-                    NSLog(@"Got 2 duplicate ACK!");
+                if (lastAckCount == 2){
+                    NSLog(@"Got 3 duplicate ACK!");
+                    [remoteHost decreaseSlidingWindow];
                     for (RDPPacket *packet in queuedPackets){
                         if (packet.start >= ack->len_received){
                             if (!packet.acknowledged && packet.sent){
