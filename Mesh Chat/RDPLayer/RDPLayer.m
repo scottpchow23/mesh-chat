@@ -54,7 +54,7 @@
         if (len > SYN_DATA_LEN)
             packetLen = SYN_DATA_LEN + 1;
         
-        NSUUID *ourUUID = [[NSUUID alloc] initWithUUIDString:BLEServer.instance.rxUUID.UUIDString];
+        NSUUID *ourUUID = [[NSUUID alloc] initWithUUIDString:[[NSUserDefaults standardUserDefaults] stringForKey:@"theUUID"]];
         
         struct linklayer_protocol_syn rawPacket;
         bzero(&rawPacket, sizeof(struct linklayer_protocol_syn));
