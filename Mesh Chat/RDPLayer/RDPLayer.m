@@ -203,20 +203,27 @@
             
             RDPPacket *ackPacket = [[RDPPacket alloc] initWithRawPacket:ack uuid:uuid];
             RDPPacket *lastAckPacket = [remoteHost.lastAck objectForKey:@(ack->ack_num)];
+            NSInteger lastAckCount = [[remoteHost.lastAckCount objectForKey:@(ack->ack_num)] integerValue];
             
             if ([lastAckPacket isEqual:ackPacket]){
                 NSLog(@"Got duplicate ACK!");
-                for (RDPPacket *packet in queuedPackets){
-                    if (packet.start >= ack->len_received){
-                        if (!packet.acknowledged && packet.sent){
-                            packet.sent = NO;
-                            packet.sentTime = 0;
-                            NSLog(@"Marked packet for sequence number %d, start %d, length %d as dropped.", packet.seqNum, packet.start, packet.len);
+                if (lastAckCount == 1){
+                    NSLog(@"Got 2 duplicate ACK!");
+                    for (RDPPacket *packet in queuedPackets){
+                        if (packet.start >= ack->len_received){
+                            if (!packet.acknowledged && packet.sent){
+                                packet.sent = NO;
+                                packet.sentTime = 0;
+                                NSLog(@"Marked packet for sequence number %d, start %d, length %d as dropped.", packet.seqNum, packet.start, packet.len);
+                            }
                         }
                     }
                 }
+                [remoteHost.lastAckCount setObject:@(lastAckCount+1) forKey:@(ack->ack_num)];
+            } else {
+                [remoteHost.lastAck setObject:ackPacket forKey:@(ack->ack_num)];
+                [remoteHost.lastAckCount setObject:@0 forKey:@(ack->ack_num)];
             }
-            [remoteHost.lastAck setObject:ackPacket forKey:@(ack->ack_num)];
             
             NSMutableArray *idxToRemove = [NSMutableArray array];
             for (RDPPacket *packet in queuedPackets){
