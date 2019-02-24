@@ -292,7 +292,7 @@
 			inputFileListPaths = (
 			);
 			inputPaths = (
-				"${SRCROOT}/Pods/Target Support Files/Pods-Mesh Chat/Pods-Mesh Chat-frameworks.sh",
+				"${PODS_ROOT}/Target Support Files/Pods-Mesh Chat/Pods-Mesh Chat-frameworks.sh",
 				"${BUILT_PRODUCTS_DIR}/MessageKit/MessageKit.framework",
 			);
 			name = "[CP] Embed Pods Frameworks";
@@ -303,7 +303,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-Mesh Chat/Pods-Mesh Chat-frameworks.sh\"\n";
+			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-Mesh Chat/Pods-Mesh Chat-frameworks.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
 		AD6DEB641B9F52069A9C8BEF /* [CP] Check Pods Manifest.lock */ = {
