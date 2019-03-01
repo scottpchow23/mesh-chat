@@ -147,7 +147,15 @@ extension BLEServer: CBPeripheralDelegate {
             print("Couldn't gather all information needed for a direct peer")
             return
         }
-        self.directPeers.append(DirectPeer(peripheral, uuid: uuid, name: userAndId.name, txCharacteristic: txChar))
+        let newPeer = DirectPeer(peripheral, uuid: uuid, name: userAndId.name, txCharacteristic: txChar)
+
+        if let index = self.directPeers.firstIndex(where: { (peer) -> Bool in
+            return peer.uuid == uuid
+        }) {
+            self.directPeers[index] = newPeer
+        } else {
+            self.directPeers.append(newPeer)
+        }
     }
 
     func peripheral(_ peripheral: CBPeripheral, didModifyServices invalidatedServices: [CBService]) {
