@@ -148,9 +148,19 @@ extension BLEServer: CBPeripheralDelegate {
             return
         }
         let newPeer = DirectPeer(peripheral, uuid: uuid, name: userAndId.name, txCharacteristic: txChar)
+        if thisUsername != "Bubby" && userAndId.name == "Bubby" {
+            print("I'm not Bubby!")
+            self.addUniquePeer(newPeer)
+            return
+        } else if thisUsername == "Bubby" {
+            print("I'm Bubby")
+            self.addUniquePeer(newPeer)
+        }
+    }
 
+    func addUniquePeer(_ newPeer: DirectPeer) {
         if let index = self.directPeers.firstIndex(where: { (peer) -> Bool in
-            return peer.uuid == uuid
+            return peer.uuid == newPeer.uuid
         }) {
             self.directPeers[index] = newPeer
         } else {
