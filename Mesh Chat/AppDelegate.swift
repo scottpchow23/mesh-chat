@@ -34,6 +34,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
             window?.rootViewController = initialViewController
         }
+        _ = P2PLayer.shared
         // Override point for customization after application launch.
         let server = BLEServer.instance
         server.startManagers()

@@ -224,11 +224,6 @@ extension BLEServer: CBPeripheralManagerDelegate {
         }
     }
 
-    struct UserAndId: Codable {
-        var uuid: String
-        var name: String
-    }
-
     func peripheralManager(_ peripheral: CBPeripheralManager, didReceiveRead request: CBATTRequest) {
         if request.characteristic.uuid == rxUUID {
             let userAndId = UserAndId(uuid: thisUUID, name: thisUsername)

@@ -15,11 +15,12 @@ class ConversationListViewController: UITableViewController {
     
     let CellIdentifier = "LabelCell"
 
-    var peers: [DirectPeer] = BLEServer.instance.directPeers
+    var peers: [UserAndId] = P2PLayer.shared.distanceVector.peers()
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        BLEServer.instance.peerDelegate = self
+        P2PLayer.shared.peerDelegate = self
+//        BLEServer.instance.peerDelegate = self
         tableView.register(UITableViewCell.classForCoder(), forCellReuseIdentifier: CellIdentifier)
     }
 
@@ -78,9 +79,9 @@ class ConversationListViewController: UITableViewController {
 
 }
 
-extension ConversationListViewController: BLEDiscoverPeerDelegate {
+extension ConversationListViewController: P2PPeerDelegate {
     func didModifyPeerList() {
-        peers = BLEServer.instance.directPeers
+        peers = P2PLayer.shared.distanceVector.peers()
         tableView.reloadData()
     }
 }
