@@ -63,7 +63,7 @@ class DistanceVector: Codable {
         return dict
     }
 
-    func filter()
+//    func filter()
 }
 
 
