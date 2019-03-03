@@ -30,9 +30,12 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             let Start : StartViewController = mainStoryboard.instantiateViewController(withIdentifier: "StartView") as! StartViewController
             let List : ConversationListViewController = mainStoryboard.instantiateViewController(withIdentifier: "ConversationView") as! ConversationListViewController
             
+            
             initialViewController.setViewControllers([Start,List], animated: false)
-
+            
+            
             window?.rootViewController = initialViewController
+            
         }
         // Override point for customization after application launch.
         let server = BLEServer.instance

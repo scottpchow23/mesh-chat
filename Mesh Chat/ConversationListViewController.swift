@@ -19,6 +19,7 @@ class ConversationListViewController: UITableViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        self.title = "Messages"
         BLEServer.instance.peerDelegate = self
         tableView.register(UITableViewCell.classForCoder(), forCellReuseIdentifier: CellIdentifier)
     }
