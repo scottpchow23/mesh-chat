@@ -24,6 +24,7 @@ class StartViewController: UIViewController {
     
     override func viewDidLoad() {
         UsernameTextField.text = username
+        self.title = "Login"
     }
     /*
      Precondition: TextField Clicked (Touch Down)
