@@ -20,7 +20,7 @@ class ChatViewController: MessagesViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-
+        self.title = thisUsername // Here we set the title for the chat
         self.messageInputBar.delegate = self
         
         messagesCollectionView.messagesDataSource = self

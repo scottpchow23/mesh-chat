@@ -19,6 +19,7 @@ class ConversationListViewController: UITableViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        self.title = "Messages"
         P2PLayer.shared.peerDelegate = self
 //        BLEServer.instance.peerDelegate = self
         tableView.register(UITableViewCell.classForCoder(), forCellReuseIdentifier: CellIdentifier)
@@ -33,33 +34,46 @@ class ConversationListViewController: UITableViewController {
 
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         // One row in each section
-        return peers.count
+        //return peers.count
+        return 5
     }
 
     
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: CellIdentifier, for: indexPath)
-        cell.textLabel?.text = peers[indexPath.row].name
+        
+        // cell.textLabel?.text = peers[indexPath.row].name
+        
         // Configure the cell...
         // Lines 41 - 54 are MVP
-//        if(indexPath.row == 0)
-//        {
-//            // Show first default message
-//            cell.textLabel?.text = "Chat with Scott" // finish this
-//
-//        }
-//        else if(indexPath.row == 1)
-//        {
-//            // Show second default message
-//            cell.textLabel?.text = "Chat with Prabal" // finish this
-//        }
-//        else if(indexPath.row == 2)
-//        {
-//            // Show second default message
-//            cell.textLabel?.text = user // TEST
-//        }
-//        else{
-//            cell.textLabel?.text = "Section \(indexPath.section) Row \(indexPath.row)"}
+        if(indexPath.row == 0)
+        {
+            // Show first default message
+            cell.textLabel?.text = "Scott" // finish this
+
+        }
+        else if(indexPath.row == 1)
+        {
+            // Show second default message
+            cell.textLabel?.text = "Prabal" // finish this
+        }
+        else if(indexPath.row == 2)
+        {
+            // Show second default message
+            cell.textLabel?.text = "Kevin" // TEST
+        }
+        else if(indexPath.row == 3)
+        {
+            // Show second default message
+            cell.textLabel?.text = "Calli" // finish this
+        }
+        else if(indexPath.row == 4)
+        {
+            // Show second default message
+            cell.textLabel?.text = "Duran Duran" // TEST
+        }
+        else{
+            cell.textLabel?.text = "Section \(indexPath.section) Row \(indexPath.row)"}
 
         return cell
     }
