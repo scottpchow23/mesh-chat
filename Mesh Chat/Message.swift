@@ -15,6 +15,7 @@ struct CodableMessage: Codable {
     var messageID: String
     var sentDate: Date
     var text: String
+    var recipient: UUID
 }
 
 struct Message : MessageType{
@@ -23,12 +24,14 @@ struct Message : MessageType{
     var messageId: String
     var sentDate: Date
     var kind: MessageKind
+    var recipient: UUID
     
-    init(sender: Sender, messageId : String, sentDate : Date, text : String) {
+    init(sender: Sender, messageId : String, sentDate : Date, text : String, recipient: UUID) {
         self.sender = sender
         self.messageId = messageId
         self.sentDate = sentDate
         self.kind = .text(text)
+        self.recipient = recipient
     }
 
     init(_ codeable: CodableMessage) {
@@ -36,12 +39,13 @@ struct Message : MessageType{
         messageId = codeable.messageID
         sentDate = codeable.sentDate
         kind = .text(codeable.text)
+        recipient = codeable.recipient
     }
 
     func archive() -> CodableMessage? {
         switch kind {
         case let .text(string):
-            return CodableMessage(senderID: sender.id, senderName: sender.displayName, messageID: messageId, sentDate: sentDate, text: string)
+            return CodableMessage(senderID: sender.id, senderName: sender.displayName, messageID: messageId, sentDate: sentDate, text: string, recipient: recipient)
         default:
             return nil
         }

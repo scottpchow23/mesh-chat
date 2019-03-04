@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		0829A72CA59083BBA9B341B1 /* Pods_Mesh_ChatTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 351C9A0A2097125A3227AFAE /* Pods_Mesh_ChatTests.framework */; };
+		B81C22152229F66E009115BF /* P2PLayer.swift in Sources */ = {isa = PBXBuildFile; fileRef = B81C22142229F66E009115BF /* P2PLayer.swift */; };
 		B8F8672C21F7F7AA003F6DE3 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = B8F8672B21F7F7AA003F6DE3 /* AppDelegate.swift */; };
 		B8F8672E21F7F7AA003F6DE3 /* StartViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B8F8672D21F7F7AA003F6DE3 /* StartViewController.swift */; };
 		B8F8673121F7F7AA003F6DE3 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = B8F8672F21F7F7AA003F6DE3 /* Main.storyboard */; };
@@ -40,6 +41,7 @@
 		351C9A0A2097125A3227AFAE /* Pods_Mesh_ChatTests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Mesh_ChatTests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		90FB92DE52285021814C045C /* Pods-Mesh Chat.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Mesh Chat.debug.xcconfig"; path = "Pods/Target Support Files/Pods-Mesh Chat/Pods-Mesh Chat.debug.xcconfig"; sourceTree = "<group>"; };
 		9E298653B1B8BA5289670821 /* Pods-Mesh ChatTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Mesh ChatTests.debug.xcconfig"; path = "Pods/Target Support Files/Pods-Mesh ChatTests/Pods-Mesh ChatTests.debug.xcconfig"; sourceTree = "<group>"; };
+		B81C22142229F66E009115BF /* P2PLayer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = P2PLayer.swift; sourceTree = "<group>"; };
 		B8F8672821F7F7AA003F6DE3 /* Mesh Chat.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Mesh Chat.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		B8F8672B21F7F7AA003F6DE3 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		B8F8672D21F7F7AA003F6DE3 /* StartViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StartViewController.swift; sourceTree = "<group>"; };
@@ -110,6 +112,14 @@
 			name = Pods;
 			sourceTree = "<group>";
 		};
+		B81C22132229F611009115BF /* P2PLayer */ = {
+			isa = PBXGroup;
+			children = (
+				B81C22142229F66E009115BF /* P2PLayer.swift */,
+			);
+			path = P2PLayer;
+			sourceTree = "<group>";
+		};
 		B8F8671F21F7F7AA003F6DE3 = {
 			isa = PBXGroup;
 			children = (
@@ -133,6 +143,7 @@
 		B8F8672A21F7F7AA003F6DE3 /* Mesh Chat */ = {
 			isa = PBXGroup;
 			children = (
+				B81C22132229F611009115BF /* P2PLayer */,
 				F154BB02220E501C001B8691 /* RDPLayer */,
 				B8F867B221FFCF73003F6DE3 /* BLELinkLayer */,
 				B8F8672B21F7F7AA003F6DE3 /* AppDelegate.swift */,
@@ -237,6 +248,11 @@
 					B8F8672721F7F7AA003F6DE3 = {
 						CreatedOnToolsVersion = 10.1;
 						LastSwiftMigration = 1010;
+						SystemCapabilities = {
+							com.apple.BackgroundModes = {
+								enabled = 1;
+							};
+						};
 					};
 					B8F8673B21F7F7AC003F6DE3 = {
 						CreatedOnToolsVersion = 10.1;
@@ -357,6 +373,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				B81C22152229F66E009115BF /* P2PLayer.swift in Sources */,
 				B8F8672E21F7F7AA003F6DE3 /* StartViewController.swift in Sources */,
 				B8F8672C21F7F7AA003F6DE3 /* AppDelegate.swift in Sources */,
 				DE32871E22051B4100749231 /* Message.swift in Sources */,
@@ -532,7 +549,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_STYLE = Automatic;
-				DEVELOPMENT_TEAM = TCM49M8P5K;
+				DEVELOPMENT_TEAM = 3BP6E4VS73;
 				INFOPLIST_FILE = "Mesh Chat/Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 10.0;
 				LD_RUNPATH_SEARCH_PATHS = (
@@ -555,7 +572,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_STYLE = Automatic;
-				DEVELOPMENT_TEAM = TCM49M8P5K;
+				DEVELOPMENT_TEAM = 3BP6E4VS73;
 				INFOPLIST_FILE = "Mesh Chat/Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 10.0;
 				LD_RUNPATH_SEARCH_PATHS = (
